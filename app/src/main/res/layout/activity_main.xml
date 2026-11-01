@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⚡ UPI AutoPay Gateway"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Instant FamPay, PhonePe, Paytm, GPay &amp; SMS Verifier"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <!-- System Status Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_rounded"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_marginBottom="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SYSTEM STATUS"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1" />
+
+            <!-- Service Status -->
+            <TextView
+                android:id="@+id/tvServiceStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🟢 Service: Running 24/7"
+                android:textColor="@color/green_status"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
+
+            <!-- Network Status -->
+            <TextView
+                android:id="@+id/tvNetworkStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🟢 Internet: Online"
+                android:textColor="@color/green_status"
+                android:textSize="13sp"
+                android:layout_marginTop="6dp" />
+
+            <!-- Offline Queue -->
+            <TextView
+                android:id="@+id/tvQueueStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📦 Offline Queue: 0 pending"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp"
+                android:layout_marginTop="6dp" />
+
+            <!-- Notification Permission -->
+            <TextView
+                android:id="@+id/tvNotifPermission"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🔔 Notification Access: Check Status"
+                android:textColor="@color/orange_status"
+                android:textSize="13sp"
+                android:layout_marginTop="6dp" />
+
+            <!-- Battery Optimization -->
+            <TextView
+                android:id="@+id/tvBatteryStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🔋 Battery Saver: Excluded"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                android:layout_marginTop="6dp" />
+
+        </LinearLayout>
+
+        <!-- Gateway Webhook Settings Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_rounded"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_marginBottom="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GATEWAY CONFIGURATION"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Server Webhook URL:"
+                android:textColor="@color/text_primary"
+                android:textSize="12sp"
+                android:layout_marginTop="10dp" />
+
+            <EditText
+                android:id="@+id/etWebhookUrl"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="#334155"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:textSize="13sp"
+                android:inputType="textUri"
+                android:hint="http://38.127.8.169:8888/api/upi/webhook"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="API Secret Key:"
+                android:textColor="@color/text_primary"
+                android:textSize="12sp"
+                android:layout_marginTop="10dp" />
+
+            <EditText
+                android:id="@+id/etSecretKey"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="#334155"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:textSize="13sp"
+                android:inputType="textPassword"
+                android:hint="mvpay_secret_2026"
+                android:layout_marginTop="4dp" />
+
+            <Button
+                android:id="@+id/btnSaveConfig"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:text="💾 Save Settings"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="@color/primary"
+                android:layout_marginTop="12dp" />
+
+        </LinearLayout>
+
+        <!-- Action Controls Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_rounded"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_marginBottom="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ACTIONS &amp; TESTING"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <Button
+                    android:id="@+id/btnForceSync"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:text="🔄 Force Sync"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#059669"
+                    android:layout_marginEnd="6dp" />
+
+                <Button
+                    android:id="@+id/btnTestNotif"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:text="🧪 Send Test"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#4F46E5"
+                    android:layout_marginStart="6dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnToggleService"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:text="▶️ Start Background Service"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#2563EB"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+
+        <!-- Live Activity Log Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_rounded"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="LIVE ACTIVITY LOG"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.1" />
+
+                <TextView
+                    android:id="@+id/tvClearLogs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Clear"
+                    android:textColor="#38BDF8"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvLogs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="120dp"
+                android:text="[Ready] Monitoring notifications...\n"
+                android:textColor="#A7F3D0"
+                android:fontFamily="monospace"
+                android:textSize="11sp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

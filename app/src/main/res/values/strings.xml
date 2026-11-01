@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UPI AutoPay Gateway</string>
+    <string name="service_running">Service Running (24/7)</string>
+    <string name="service_stopped">Service Stopped</string>
+    <string name="notif_perm_granted">Notification Access: Granted</string>
+    <string name="notif_perm_denied">Notification Access: Action Required</string>
+    <string name="battery_ignored">Battery Optimization: Disabled</string>
+    <string name="battery_optimizing">Battery Optimization: Active (Tap to Disable)</string>
+</resources>
