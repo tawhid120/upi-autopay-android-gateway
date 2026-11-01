@@ -84,15 +84,15 @@ public class UpiNotificationService extends NotificationListenerService {
         Log.d(TAG, "Notification from " + packageName + " -> Title: " + title + " | Text: " + text);
 
         // Parse with UpiParser
-        UpiParser.ParsedPayment parsed = UpiParser.parse(title, text);
+        UpiParser.ParsedPayment parsed = UpiParser.parse(title, text, packageName);
         if (parsed != null && parsed.isCredit) {
             long timestamp = sbn.getPostTime() > 0 ? sbn.getPostTime() : System.currentTimeMillis();
-            Log.i(TAG, "🎯 Valid payment detected! Amount: ₹" + parsed.amount + " UTR: " + parsed.utr);
+            Log.i(TAG, "🎯 Valid payment detected! Provider: " + parsed.provider + " | Amount: ₹" + parsed.amount + " | UTR: " + parsed.utr);
 
             WebhookSender.sendPaymentAlert(
                     getApplicationContext(),
                     packageName,
-                    packageName,
+                    parsed.provider,
                     title,
                     text,
                     parsed.amount,
