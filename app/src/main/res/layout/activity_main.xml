@@ -104,6 +104,18 @@
                 android:textSize="13sp"
                 android:layout_marginTop="6dp" />
 
+            <!-- Android 13/14/15/16 Permission Fix Button -->
+            <Button
+                android:id="@+id/btnRestrictedHelp"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:text="🔓 Android 13–16 Fix (If Permission Grayed Out)"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:backgroundTint="#D97706"
+                android:layout_marginTop="10dp" />
+
         </LinearLayout>
 
         <!-- Gateway Webhook Settings Card -->

@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnForceSync;
     private Button btnTestNotif;
     private Button btnToggleService;
+    private Button btnRestrictedHelp;
 
     private BroadcastReceiver logReceiver;
     private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         btnForceSync = findViewById(R.id.btnForceSync);
         btnTestNotif = findViewById(R.id.btnTestNotif);
         btnToggleService = findViewById(R.id.btnToggleService);
+        btnRestrictedHelp = findViewById(R.id.btnRestrictedHelp);
     }
 
     private void loadSettings() {
@@ -123,9 +125,17 @@ public class MainActivity extends AppCompatActivity {
 
         tvClearLogs.setOnClickListener(v -> tvLogs.setText("[Ready] Logs cleared.\n"));
 
-        tvNotifPermission.setOnClickListener(v -> openNotificationAccessSettings());
+        tvNotifPermission.setOnClickListener(v -> {
+            if (!isNotificationServiceEnabled() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                showRestrictedSettingsHelp();
+            } else {
+                openNotificationAccessSettings();
+            }
+        });
 
         tvBatteryStatus.setOnClickListener(v -> requestDisableBatteryOptimization());
+
+        btnRestrictedHelp.setOnClickListener(v -> showRestrictedSettingsHelp());
     }
 
     private void startGatewayService() {
@@ -235,16 +245,31 @@ public class MainActivity extends AppCompatActivity {
     private void requestNecessaryPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.POST_NOTIFICATIONS,
-                    Manifest.permission.RECEIVE_SMS,
-                    Manifest.permission.READ_SMS
-            }, 101);
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.RECEIVE_SMS,
-                    Manifest.permission.READ_SMS
+                    Manifest.permission.POST_NOTIFICATIONS
             }, 101);
         }
+    }
+
+    private void showRestrictedSettingsHelp() {
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("🔓 Android 13–16 Permission Fix")
+                .setMessage("On modern Android (13, 14, 15, 16), Google temporarily grays out Notification Access for sideloaded apps for security.\n\n" +
+                        "How to enable it in 10 seconds:\n\n" +
+                        "1. Tap 'OPEN APP INFO' below.\n" +
+                        "2. Tap the 3 vertical dots (⋮) in the top-right corner.\n" +
+                        "3. Select 'Allow restricted settings' & confirm your PIN/Fingerprint.\n" +
+                        "4. Return to this app and tap 'Notification Access' to turn it ON!")
+                .setPositiveButton("⚙️ Open App Info", (dialog, which) -> {
+                    try {
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        intent.setData(Uri.parse("package:" + getPackageName()));
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("Open Notification Settings", (dialog, which) -> openNotificationAccessSettings())
+                .show();
     }
 
     private void sendTestNotification() {
