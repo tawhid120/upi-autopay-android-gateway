@@ -1,0 +1,5 @@
+[VIDEO MODEL: Seedance 2.0 / Kling 1.5 / Runway Gen-3 / Luma Dream Machine]
+--start-image: dive_01_checkout_last_frame.png
+--end-image: still_02_relay_first_frame.png
+Motion Prompt:
+Seamless aerial connector. Start from the exact last frame of Dive 01. The camera gracefully pulls up and out of the kiosk screen, banks smoothly right across the dark void space following an arching stream of glowing cyan data fibers, and seamlessly descends to match the exact framing, perspective, and lighting of the Android phone relay workstation in Scene 2. Frame-lock both start and end frames identically. Zero cut, zero stutter.

@@ -1,0 +1,343 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import '../providers/payment_provider.dart';
+import '../utils/app_design.dart';
+import '../widgets/liquid_glass.dart';
+import 'home_screen.dart';
+
+class LicenseActivationScreen extends StatefulWidget {
+  const LicenseActivationScreen({super.key});
+
+  @override
+  State<LicenseActivationScreen> createState() => _LicenseActivationScreenState();
+}
+
+class _LicenseActivationScreenState extends State<LicenseActivationScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _serverUrlController = TextEditingController(text: 'http://217.216.39.164:4000');
+  final _licenseKeyController = TextEditingController();
+
+  bool _isLoading = false;
+  String? _errorMessage;
+
+  @override
+  void dispose() {
+    _serverUrlController.dispose();
+    _licenseKeyController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleActivation() async {
+    if (!_formKey.currentState!.validate()) {
+      HapticFeedback.heavyImpact();
+      return;
+    }
+
+    HapticFeedback.lightImpact();
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    final provider = Provider.of<PaymentProvider>(context, listen: false);
+    final result = await provider.pairDeviceWithLicense(
+      serverUrl: _serverUrlController.text.trim(),
+      licenseKey: _licenseKeyController.text.trim(),
+    );
+
+    if (!mounted) return;
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (result['success'] == true) {
+      HapticFeedback.mediumImpact();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(result['message'] ?? 'ডিভাইস সফলভাবে সক্রিয় করা হয়েছে!', style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.white)),
+          backgroundColor: AppDesign.statusSuccess,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      Navigator.of(context).pushReplacement(
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const HomeScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(opacity: animation, child: child),
+        ),
+      );
+    } else {
+      HapticFeedback.heavyImpact();
+      setState(() {
+        _errorMessage = result['message'] ?? 'ডিভাইস অ্যাক্টিভেশন ব্যর্থ হয়েছে।';
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+
+    return Scaffold(
+      backgroundColor: colors.background,
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(height: 24),
+
+                  // Brand Title (Pure clean text without icon inside app)
+                  Text(
+                    'Payviro',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 34,
+                      fontWeight: FontWeight.w900,
+                      color: colors.textPrimary,
+                      letterSpacing: -1,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    'MFS Payment Relay Agent',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: colors.textSecondary,
+                      letterSpacing: 1.5,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 28),
+
+                  // Info Card (Apple Inset Liquid Glass Callout)
+                  LiquidGlassContainer(
+                    padding: const EdgeInsets.all(16),
+                    borderRadius: BorderRadius.circular(18),
+                    tintColor: colors.surface,
+                    borderColor: colors.border,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(Icons.info_outline_rounded, color: AppDesign.accentCyan, size: 20),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            'আপনার মার্চেন্ট ড্যাশবোর্ড থেকে লাইসেন্স কি (যেমন: PV-PRO-XXXX) সংগ্রহ করে এই ফোনে পেয়ার করুন।',
+                            style: TextStyle(
+                              color: colors.textSecondary,
+                              fontSize: 12.5,
+                              height: 1.45,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Error Banner
+                  if (_errorMessage != null) ...[
+                    Container(
+                      padding: const EdgeInsets.all(14),
+                      decoration: BoxDecoration(
+                        color: AppDesign.statusErrorBg,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: AppDesign.statusError.withValues(alpha: 0.35)),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.error_outline_rounded, color: AppDesign.statusError, size: 20),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              _errorMessage!,
+                              style: const TextStyle(
+                                color: AppDesign.statusError,
+                                fontSize: 12.5,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+
+                  // License Key Input
+                  Text(
+                    'মার্চেন্ট লাইসেন্স কি *',
+                    style: TextStyle(
+                      color: colors.textPrimary,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    controller: _licenseKeyController,
+                    style: TextStyle(
+                      color: colors.textPrimary,
+                      fontFamily: 'monospace',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      letterSpacing: 1.5,
+                    ),
+                    textCapitalization: TextCapitalization.characters,
+                    decoration: InputDecoration(
+                      hintText: 'PV-ENTERPRISE-XXXX',
+                      hintStyle: TextStyle(
+                        color: colors.textTertiary,
+                        letterSpacing: 1.2,
+                        fontSize: 13,
+                      ),
+                      prefixIcon: Icon(Icons.vpn_key_rounded, color: colors.textSecondary, size: 20),
+                      filled: true,
+                      fillColor: colors.surfaceElevated,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide(color: colors.border),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide(color: colors.border),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                        borderSide: BorderSide(color: AppDesign.accentBlue, width: 1.5),
+                      ),
+                    ),
+                    validator: (v) {
+                      if (v == null || v.trim().isEmpty) {
+                        return 'লাইসেন্স কি প্রদান করুন';
+                      }
+                      if (!v.trim().toUpperCase().startsWith('PV-')) {
+                        return 'সঠিক ফরম্যাটের লাইসেন্স কি দিন (যেমন: PV-PRO-...)';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 18),
+
+                  // Auto Hardware Detection Info Badge
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: colors.surfaceElevated,
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(color: colors.border),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.verified_user_rounded, color: AppDesign.statusSuccess, size: 18),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            'ফোনের হার্ডওয়্যার মডেল স্বয়ংক্রিয়ভাবে শনাক্ত ও ইউনিকলি পেয়ার হবে',
+                            style: TextStyle(
+                              color: colors.textSecondary,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+
+                  // Server URL Input
+                  Text(
+                    'সার্ভার ইউআরএল (API Base)',
+                    style: TextStyle(
+                      color: colors.textPrimary,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    controller: _serverUrlController,
+                    style: const TextStyle(
+                      color: AppDesign.accentCyan,
+                      fontSize: 13,
+                      fontFamily: 'monospace',
+                    ),
+                    decoration: InputDecoration(
+                      hintText: 'https://api.yourdomain.com',
+                      prefixIcon: Icon(Icons.cloud_rounded, color: colors.textSecondary, size: 20),
+                      filled: true,
+                      fillColor: colors.surfaceElevated,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide(color: colors.border),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide(color: colors.border),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                        borderSide: BorderSide(color: AppDesign.accentBlue, width: 1.5),
+                      ),
+                    ),
+                    validator: (v) {
+                      if (v == null || v.trim().isEmpty) {
+                        return 'সার্ভার ইউআরএল প্রয়োজন';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 30),
+
+                  // Submit Button (Apple Tactile Liquid Pill)
+                  LiquidGlassButton(
+                    onPressed: _isLoading ? null : _handleActivation,
+                    height: 52,
+                    borderRadius: BorderRadius.circular(16),
+                    backgroundColor: AppDesign.accentBlue,
+                    child: Center(
+                      child: _isLoading
+                          ? const SizedBox(
+                              width: 22,
+                              height: 22,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.5,
+                                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                              ),
+                            )
+                          : const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.link_rounded, size: 20, color: Colors.white),
+                                SizedBox(width: 8),
+                                Text(
+                                  'লাইসেন্স অ্যাক্টিভেট ও পেয়ার করুন',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                    letterSpacing: -0.2,
+                                  ),
+                                ),
+                              ],
+                            ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

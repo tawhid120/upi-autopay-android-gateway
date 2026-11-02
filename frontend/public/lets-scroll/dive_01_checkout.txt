@@ -1,0 +1,4 @@
+[VIDEO MODEL: Seedance 2.0 / Kling 1.5 / Runway Gen-3 / Luma Dream Machine]
+--start-image: still_01_checkout.png
+Motion Prompt:
+Continuous forward flight. Start from the exact composition of the start image. The camera smoothly glides forward and pushes into the glowing kiosk screen, tracking past the miniature customer toward the pulsing QR pedestal, then hovers steadily inside the illuminated payment zone. Smooth slow cinematic motion, gentle tilt-shift blur, zero visible jumps. No audio, no text, no captions.

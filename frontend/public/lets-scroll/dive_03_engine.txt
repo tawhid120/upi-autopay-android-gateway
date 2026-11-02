@@ -1,0 +1,4 @@
+[VIDEO MODEL: Seedance 2.0 / Kling 1.5 / Runway Gen-3 / Luma Dream Machine]
+--start-image: still_03_engine.png
+Motion Prompt:
+Continuous forward flight. Start from the exact composition of the start image. The camera dives straight between the dark server racks into the center of the rotating holographic core prism, revealing streams of emerald #10B981 data particles flowing in sub-millisecond precision. Smooth cinematic forward glide. Zero visible jumps. No audio, no text, no captions.

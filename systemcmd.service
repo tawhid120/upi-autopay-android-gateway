@@ -1,0 +1,22 @@
+[Unit]
+Description=PayVerify BD v2 Production Core (Backend & Website 24/7)
+After=network.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/payverify-bd/backend
+ExecStart=/usr/bin/node dist/server.js
+Restart=always
+RestartSec=3s
+Environment=NODE_ENV=production
+Environment=PORT=80
+Environment=CHECKOUT_BASE_URL=http://38.127.8.101
+Environment=CORS_ORIGIN=*
+LimitNOFILE=65536
+KillMode=mixed
+TimeoutStopSec=10
+
+[Install]
+WantedBy=multi-user.target

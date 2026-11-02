@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta name="theme-color" content="#000000" />
+    <!-- NOTE: STRICT ENGLISH-ONLY UI. Do not add Bengali text in this project. Keep all microcopy concise and professional. -->
+    <title>Payviro BD — Automated bKash, Nagad & Rocket Payment Verification</title>
+    <meta name="description" content="Bangladesh's #1 automated payment verification platform for bKash, Nagad, and Rocket. Stop fake payment screenshots and fake SMS scams in 1 second with 0% commission." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;450;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="video" href="/lets-scroll/journey_mobile.mp4" type="video/mp4" media="(max-width: 860px)" />
+    <link rel="preload" as="video" href="/lets-scroll/journey_desktop.mp4" type="video/mp4" media="(min-width: 861px)" />
+    <script>
+      (function() {
+        try {
+          var mode = localStorage.getItem('payviro_theme_mode') || 'system';
+          var isDark = mode === 'dark' || (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          var root = document.documentElement;
+          root.classList.add(isDark ? 'dark' : 'light');
+          root.setAttribute('data-theme', isDark ? 'dark' : 'light');
+          root.setAttribute('data-theme-mode', mode);
+          root.style.colorScheme = isDark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

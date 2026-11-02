@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  payverify-core:
+    build: .
+    container_name: payverify_backend
+    restart: always
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+      - NODE_ENV=production
+      - DATABASE_PATH=/app/data/payverify.sqlite
+    volumes:
+      - ./data:/app/data
+      - ../frontend/dist:/app/frontend_dist

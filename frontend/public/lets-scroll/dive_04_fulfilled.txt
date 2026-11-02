@@ -1,0 +1,4 @@
+[VIDEO MODEL: Seedance 2.0 / Kling 1.5 / Runway Gen-3 / Luma Dream Machine]
+--start-image: still_04_fulfilled.png
+Motion Prompt:
+Continuous forward flight. Start from the exact composition of the start image. The camera moves gently forward and banks slightly upwards, centering on the glowing emerald checkmark shield and the delivery drone as it lifts off into the gentle warm studio light. Gentle settle into a triumphant hero hold. Zero visible jumps. No audio, no text, no captions.

@@ -1,4 +1,55 @@
-.gradle/
-build/
-app/build/
-local.properties
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildpath
+.checkstyle
+.project
+.settings
+.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+*.apk
+!Payviro-UPI-*.apk
+tools/
+platform-tools/
+*.png
+
+# Android related
+**/android/**/gradle-wrapper.jar
+**/android/.gradle
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+
+# Exceptions to above rules.
+!**/android/app/src/main/res/mipmap-*
+!**/android/app/src/main/res/mipmap-*/*
+!**/android/app/src/main/res/drawable*
+!**/android/app/src/main/res/drawable*/*
+!**/frontend/public/*.png
+
+# Node.js & Web Platform
+**/node_modules/
+**/dist/
+backend/data/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+.env
+build_output/
+/dive_*.mp4
+scratch/

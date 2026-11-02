@@ -1,0 +1,4 @@
+[VIDEO MODEL: Seedance 2.0 / Kling 1.5 / Runway Gen-3 / Luma Dream Machine]
+--start-image: still_02_relay.png
+Motion Prompt:
+Continuous forward flight. Start from the exact composition of the start image. The camera dives smoothly forward toward the physical Android smartphone, pushing past the glowing antenna tower into the fiber optic data conduits on the device surface. Smooth cinematic micro-dolly move, calm motion. Zero visible jumps. No audio, no text, no captions.

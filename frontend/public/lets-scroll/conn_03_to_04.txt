@@ -1,0 +1,5 @@
+[VIDEO MODEL: Seedance 2.0 / Kling 1.5 / Runway Gen-3 / Luma Dream Machine]
+--start-image: dive_03_engine_last_frame.png
+--end-image: still_04_fulfilled_first_frame.png
+Motion Prompt:
+Seamless aerial connector. Start from the exact last frame of Dive 03. The camera pulls smoothly out of the holographic server core, swoops upwards in a cinematic arc over the dark server racks, and glides forward into the celebratory storefront plaza of Scene 4, settling into the exact opening perspective of the fulfilled storefront. Frame-lock both start and end frames identically. Zero cut, zero stutter.

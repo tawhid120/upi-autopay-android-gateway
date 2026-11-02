@@ -1,0 +1,140 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Release APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Prepare Android Project Scaffolding
+        run: |
+          mkdir -p /tmp/payverify_backup
+          cp android/app/src/main/AndroidManifest.xml /tmp/payverify_backup/ || true
+          cp -r android/app/src/main/kotlin /tmp/payverify_backup/ || true
+          cp -r android/app/src/main/res /tmp/payverify_backup/ || true
+          cp android/key.properties /tmp/payverify_backup/ || true
+          cp android/app/payverify-release.jks /tmp/payverify_backup/ || true
+          cp android/payverify-release.jks /tmp/payverify_backup/ || true
+          
+          rm -rf android
+          flutter create --platforms=android --org com.payverify --project-name bd .
+          
+          cp /tmp/payverify_backup/AndroidManifest.xml android/app/src/main/AndroidManifest.xml
+          rm -rf android/app/src/main/kotlin/*
+          mkdir -p android/app/src/main/kotlin/com/payverify/bd
+          cp -r /tmp/payverify_backup/kotlin/com/payverify/bd/* android/app/src/main/kotlin/com/payverify/bd/
+          cp -r /tmp/payverify_backup/res/* android/app/src/main/res/
+          
+          # Restore or generate key.properties
+          echo "storePassword=6251@TAWHId" > android/key.properties
+          echo "keyPassword=6251@TAWHId" >> android/key.properties
+          echo "keyAlias=tawhid" >> android/key.properties
+          echo "storeFile=payverify-release.jks" >> android/key.properties
+          
+          # Restore release keystore or decode from embedded base64
+          if [ -f /tmp/payverify_backup/payverify-release.jks ]; then
+            cp /tmp/payverify_backup/payverify-release.jks android/app/payverify-release.jks
+            cp /tmp/payverify_backup/payverify-release.jks android/payverify-release.jks
+          fi
+          if [ ! -f android/app/payverify-release.jks ]; then
+            echo "MIIKpAIBAzCCCk4GCSqGSIb3DQEHAaCCCj8Eggo7MIIKNzCCBa4GCSqGSIb3DQEHAaCCBZ8EggWbMIIFlzCCBZMGCyqGSIb3DQEMCgECoIIFQDCCBTwwZgYJKoZIhvcNAQUNMFkwOAYJKoZIhvcNAQUMMCsEFA5C8terGNWLEoGX1brjQrMLKgG9AgInEAIBIDAMBggqhkiG9w0CCQUAMB0GCWCGSAFlAwQBKgQQSBCZvs88/TIriTf9LasQiASCBNDiXoHvZ0G9MJqdJWacT451j1KGHBwHyzuRsuy/Z/Xsrs1hHMaJrFPAXctRthT80YFZaXv+n/Et0t35/luembMOC5p9319XyIYCmXY1uxw1IuJCDLksXFpaZeS1UZXqHaz8s/WqYofvbBV5hF+cXZpnT+2+n3EMnQAK+bQ1cYHLYf569Tx51AMx7URMC+bdMiud3hkbY6zE1fWIoa96Iv1hzs7AtipWPAJE+0x4ar1EKQZNi63aH1C2ywJrDegXqde+4KR2vVKhQbCrrZlKoYXxtH01ecMSWC1mcA7Qzw+t19+cj/l93qZi1OCuY8vuJVGw6YsRe/uSR96h4yOUH9fnLoolvCl1dHfkOlWtCAMD4cdG7gnOXd/OxkimNJdSUUHX3wd9w1ZPyB825yb7oTlMkKS+DFMZ5KX0pAqxuQGS7kCV5KmxvOky2Cnm+1v3xee0JpHyCfEdOeGF7YUu5A6cWkgh0oTOxJiTdzwzGPKcgsCvp0+JxdGvtcFVcHCQysna5+D6z56wC2NmNTTwZKaOgUPYVArVJfe0l45M3NBEk797MY2e8vReYSWO5/BtO0xyRck9gzvMdFlHNkfaff7IbgJIsnT9gwq4KHdCB5b36HpynUfUmHYs8/s7uXZP+PiiJazZVcts0/fbqAPTWzerh5cFCcHrGW3em00yISXdSLepoZhZFtGse5789pW+eW0uTNw2X8d5f2JM6kYSMBt25aAm/erepDqFvRs/py8PpMwlj9DwkxvXTF8cThsA++JMWrLK88T5oq9cvB+LcnBiY1qvXfVh3k/a9UUCGDOmZ7/BdrqlI14hLK1xBhBB9cJHRDDBZoa17pwACl2m/QBkfIwkUg+uLziUCejlvuB4KAmpL5RJQ+cO20KvM2yVep5+FfjghXPKjVWQ+wM/8yZwqKvPxM3EpfrxumOUo1Gg/AssNplLcKLLZRlvct/hoDpect2YiaBi4ll7u3FKH52OIax52hdcYdfaNnIH3QLfNj3pGWPX1ejVk7p9Gj3MbjhWWdlRPaKfm/vIYYCDaQ60DxUDE6fIIvbMoUt1mIi9murwMIw3beS2UZEfNXoZq7rIBITWUGwk0NNnLaZuUMDwM3zxohSLCkV4w5iI/giMALwV9PQzKSeAQiV4f2OELUbObGTPpfO5ADKrco1/+AHc6cUplxPDCY7Lbgtz+yWCL7mVZ4oh0nxTplo/BPW7/Ws7m0IMgTaqyDk4kYTcAu7aMvVjr/mcGXYnE2yvZG2jPZ6eR2VP00wxn7Yj+R8a5FGxV9NmM8V6J3Quy//WqUjxE7ap0qdS8K/8oUTs05OYWhI5hJFXzIIjLRdXtLrbMzDyVsQxG0hLA7hj4He+IvCS5UaoOW+jK5rzkvpzQaHHTmFuOCO7Avjf0vcseefemxp1WEUpTWDT+3pEXEfAwJgSc30mMhn6HM8p8bNiLGwa4QD8vBRRBVAIL13TbnXRpCeFlYS3Qdpaz/MQ6OtwzgnlZLGaQjCY4va2H/XkyyoBS60d6cb3GVDnyR5PrVWAN9nmCS8CCJsmy5YgYv1EDPizsN/Sn4c2/Y/ajAgM2ZQhaUQzxOk2XQ+gPmML6aFH8mXL2B+bCR6ntgf4BLhI3eCSfvLjmOlHVdQTg2nfLqLl6TFAMBsGCSqGSIb3DQEJFDEOHgwAdABhAHcAaABpAGQwIQYJKoZIhvcNAQkVMRQEElRpbWUgMTc4ODUxNDc5OTc4NTCCBIEGCSqGSIb3DQEHBqCCBHIwggRuAgEAMIIEZwYJKoZIhvcNAQcBMGYGCSqGSIb3DQEFDTBZMDgGCSqGSIb3DQEFDDArBBSZUWxsoulyO74x+RNO5qIAjX6TgQICJxACASAwDAYIKoZIhvcNAgkFADAdBglghkgBZQMEASoEEKhAW2QylaAVSkLeajxJkdSAggPwwg9sNoBDhGwGUi0uDa5S4fonsLZ2dyhNPC4ShRgKpLzGm/NIcW7oaf5YKO5RyFOUTcmp32FOJYGpYj6SYbwpUv6a7GID/clGE9fG9TyfH/bEyvobzOQ6gCrvzYFuy3mUXwuejqqA4A2MH42vY6BspNkNk9AjgjJA1/4a9A4o+O1cIsTJh+lN2tANh4boc13aTCto+VxpcQvmxUSfpsn8owxPd/DOFa423iX6RcIkQ2WpC0wq0taZ4gI+aGxtlvutA+YrFNuKkG1HgA1VnkWyTdml6X8oCiZCAqtoUddc+Gs70p2HC689mSS7pMDK5JoUInMJC+pi+SBSHBXhGkfTAx74D7iSZjAFLL8YiTZlkXCNp1EiA9vIsjytUjXciTCohTWzaq6r6F1hnwLY2282jcf+2i/br44CPSrMTKie9YQKP0j2/h9FlGp2TPUNdkH5ubbVC0ZQb7otG4C6KMI3K+TUnPtAJMwTlEuNbzNtpKgGh8648DgqP+wFz4qk6+z6ztpiGuxQdSndL2fReTgWwIoQtmGycmnyZ0jmYqV4Cdv72GCQVJ98rZxKaz/cWxuSWRFGtojYZESM2BH3CzWVkxzysZJvvjLAKrnNd+oOSwIH8/7slpNBJFysnlrNRI3oQLj6WGSQAtMiU7OmLaTXtswQ0H8TOA0kJveSrOcMQl81ZBOO3eSKV++A8HspCugYVE+1mBDd/g5isT02Y9Dy26tAjVxkHEuzmCw9bdDcwJfUhADCD2UHAXyY+67qNg4YCBgfb0IDjs7rmM8QzeETIk1CTaDMbPGUXf4M5xxHvwXuiNZDaZVhdLmgtbIIRJ/NLhukCYHEjvLAzzrY2foiuHECd3f/FPCcIu9nMlyum4RF1qYbeTGwNY11Md3i+ljWevsa/Gq/cpZ0t5Dt1LRVTkH7ZolsGw2nSPKxLvsiOVnHAL1tW2jTcTDFswVLDVSUKj0yJtBiXkGAgdwDjQmz6g7L4u72h2/Fc1TmuCXVHLdbhMkTr4bKYCsyEoQbuav0qKMWmjjth4vKe6mV0BEBUUeFLLLtaYqWTPqMMR7rtDPYc/WBFfKPnKegll07hdv1Ik29ZWiR77/bUC47ItWnGbyIfXNdgS0xMu46DKFG0L2vsibE0jvndHwsAgiZrZkEBIwg9MSBPq2FZymtEL/xKOW6E4nIlqxExVCFLx8F4WhtCXGjnWp5viZlsKMsCqdE6OO38HBZYmpESrlatHacy+jNxmcjfNQ4nULXi1jgghdTnqwm1jkXWGO2ebuLFQLRa5AwBuw7+iv1TNL4QyzFPznFOASMV8ODLB73LZN8kVnLEHJkiTTiO0SJnVL4MCHpME0wMTANBglghkgBZQMEAgEFAAQgwuE5IfwSWBTsvPZ+Tgw1Zda+AuqEYb5tnN/qEYc+HccEFFm82H3xTyUcEh+lveOjPSV6tWMoAgInEA==" | base64 -d > android/app/payverify-release.jks
+            cp android/app/payverify-release.jks android/payverify-release.jks
+          fi
+          
+          python3 - << 'PYEOF'
+          import os, re
+          for path in ['android/app/build.gradle.kts', 'android/app/build.gradle']:
+              if os.path.exists(path):
+                  with open(path, 'r') as f:
+                      c = f.read()
+                  is_kts = path.endswith('.kts')
+                  if 'isCoreLibraryDesugaringEnabled' not in c and 'coreLibraryDesugaringEnabled' not in c:
+                      desugar_opt = '        isCoreLibraryDesugaringEnabled = true' if is_kts else '        coreLibraryDesugaringEnabled true'
+                      c = c.replace('compileOptions {', f'compileOptions {{\n{desugar_opt}')
+                  if 'coreLibraryDesugaring' not in c:
+                      dep = 'dependencies {\n    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")\n}\n' if is_kts else "dependencies {\n    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'\n}\n"
+                      c += f'\n{dep}'
+                  if is_kts:
+                      c = re.sub(r'minSdk\s*=.*', 'minSdk = 23', c)
+                      c = re.sub(r'versionCode\s*=.*', 'versionCode = 5', c)
+                      c = re.sub(r'versionName\s*=.*', 'versionName = "2.3.0.0.1"', c)
+                  else:
+                      c = re.sub(r'minSdkVersion\s+.*', 'minSdkVersion 23', c)
+                      c = re.sub(r'versionCode\s+.*', 'versionCode 5', c)
+                      c = re.sub(r'versionName\s+.*', 'versionName "2.3.0.0.1"', c)
+
+                  # Inject Tawhid Release Signing
+                  if is_kts:
+                      header = 'import java.util.Properties\nimport java.io.FileInputStream\n\nval keystoreProperties = Properties()\nval keystorePropertiesFile = rootProject.file("key.properties")\nif (keystorePropertiesFile.exists()) {\n    keystoreProperties.load(FileInputStream(keystorePropertiesFile))\n}\n'
+                      c = header + '\n' + c
+                      signing_block = '    signingConfigs {\n        create("release") {\n            keyAlias = keystoreProperties["keyAlias"] as String? ?: "tawhid"\n            keyPassword = keystoreProperties["keyPassword"] as String? ?: "6251@TAWHId"\n            val sf = keystoreProperties["storeFile"] as String? ?: "payverify-release.jks"\n            storeFile = if (file(sf).exists()) file(sf) else rootProject.file(sf)\n            storePassword = keystoreProperties["storePassword"] as String? ?: "6251@TAWHId"\n        }\n    }\n'
+                      c = c.replace('buildTypes {', signing_block + '\n    buildTypes {')
+                      c = c.replace('signingConfigs.getByName("debug")', 'if (keystorePropertiesFile.exists()) signingConfigs.getByName("release") else signingConfigs.getByName("debug")')
+                  else:
+                      header = 'def keystoreProperties = new Properties()\ndef keystorePropertiesFile = rootProject.file("key.properties")\nif (keystorePropertiesFile.exists()) {\n    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))\n}\n'
+                      c = header + '\n' + c
+                      signing_block = '    signingConfigs {\n        release {\n            if (keystorePropertiesFile.exists()) {\n                keyAlias keystoreProperties["keyAlias"]\n                keyPassword keystoreProperties["keyPassword"]\n                def sf = keystoreProperties["storeFile"] ?: "payverify-release.jks"\n                storeFile file(sf).exists() ? file(sf) : rootProject.file(sf)\n                storePassword keystoreProperties["storePassword"]\n            }\n        }\n    }\n'
+                      c = c.replace('buildTypes {', signing_block + '\n    buildTypes {')
+                      c = c.replace('signingConfig signingConfigs.debug', 'if (keystorePropertiesFile.exists()) signingConfig signingConfigs.release else signingConfig signingConfigs.debug')
+
+                  with open(path, 'w') as f:
+                      f.write(c)
+          PYEOF
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Build Release APK
+        run: flutter build apk --release --build-name=2.3.0.0.1 --build-number=5
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: payverify-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Create or Update GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v2.3.0
+          name: Payviro UPI v2.3.0 — Indian UPI & Banking AutoPay Gateway
+          make_latest: true
+          body: |
+            ## 🚀 Payviro UPI v2.3.0 — Indian UPI & Banking AutoPay Gateway Release
+            
+            ### ✨ Features:
+            - **Indian UPI Support**: Real-time automated verification for PhonePe, Google Pay (GPay), Paytm, FamPay, BHIM, CRED, Amazon Pay, and all major Indian Banks (SBI, HDFC, ICICI, Axis, Kotak, PNB, etc.).
+            - **12-Digit UTR Extraction**: Ultra-fast regex parsing capturing 12-digit UTR/RRN numbers and INR (₹) amounts.
+            - **Webhook Auto-Sync**: Instant HTTP POST forwarding to Telegram bot / Cheapbot webhook endpoint (`/api/upi/webhook`).
+            - **Android 14, 15 & 16 Compatible**: Built with `NotificationListenerService` and sideloaded app restricted settings walkthrough to easily bypass Google Play Protect restrictions.
+            - **Trusted Release Signing**: Signed with official keystore footprint (`payverify-release.jks`) to prevent Google Play Protect installation blocks.
+            - **Apple Liquid Glass UI**: Apple-inspired design with Dark (OLED) and Light mode, live status telemetry, and offline queue.
+            
+            ### 📥 Download:
+            Download `app-release.apk` below and install directly on your Android device.
+          files: build/app/outputs/flutter-apk/app-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

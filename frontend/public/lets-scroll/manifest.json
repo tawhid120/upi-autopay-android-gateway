@@ -1,0 +1,111 @@
+{
+  "brand": {
+    "name": "Payviro",
+    "href": "#top"
+  },
+  "diveScroll": 1.4,
+  "connScroll": 1,
+  "hint": "Scroll down to explore 3D journey ↓",
+  "nav": true,
+  "atmosphere": true,
+  "cameraStyle": "fly-through (Architecture B)",
+  "palette": {
+    "bg": "#0A0F1D",
+    "card": "#111827",
+    "border": "#1E293B",
+    "primary": "#6366F1",
+    "emerald": "#10B981",
+    "bkash": "#E2136E",
+    "amber": "#F59E0B"
+  },
+  "sections": [
+    {
+      "id": "checkout",
+      "label": "Customer Checkout",
+      "eyebrow": "Scenario 01: Customer Checkout",
+      "title": "Seamless QR & MFS Checkout",
+      "body": "Customers scan QR or transfer via bKash, Nagad, or Rocket directly at checkout.",
+      "accent": "#E2136E",
+      "still": "/lets-scroll/still_01.svg",
+      "stillMobile": "/lets-scroll/still_01_mobile.svg",
+      "clip": "/lets-scroll/dive_01.mp4",
+      "clipMobile": "/lets-scroll/dive_01_mobile.mp4",
+      "tags": [
+        "QR Code",
+        "bKash / Nagad",
+        "Customer UX"
+      ]
+    },
+    {
+      "id": "relay",
+      "label": "Android Relay",
+      "eyebrow": "Scenario 02: Android Hardware Relay",
+      "title": "0.1s Telco SMS Interception",
+      "body": "Merchant relay phone captures telco SMS with zero latency and encrypted local buffering.",
+      "accent": "#38BDF8",
+      "still": "/lets-scroll/still_02.svg",
+      "stillMobile": "/lets-scroll/still_02_mobile.svg",
+      "clip": "/lets-scroll/dive_02.mp4",
+      "clipMobile": "/lets-scroll/dive_02_mobile.mp4",
+      "tags": [
+        "Android 14/15",
+        "Offline SQLite",
+        "4-Tier Fingerprint"
+      ]
+    },
+    {
+      "id": "engine",
+      "label": "Private VPS Core",
+      "eyebrow": "Scenario 03: Private VPS Engine",
+      "title": "0.18s In-Memory Verification",
+      "body": "Isolated VPS engine executes 9-stage telemetry and fraud shielding against replay attacks.",
+      "accent": "#6366F1",
+      "still": "/lets-scroll/still_03.svg",
+      "stillMobile": "/lets-scroll/still_03_mobile.svg",
+      "clip": "/lets-scroll/dive_03.mp4",
+      "clipMobile": "/lets-scroll/dive_03_mobile.mp4",
+      "tags": [
+        "Dedicated VPS",
+        "9-Stage Audit",
+        "Sub-second 0.18s"
+      ]
+    },
+    {
+      "id": "fulfilled",
+      "label": "Merchant Confirmation",
+      "eyebrow": "Scenario 04: Merchant Confirmation",
+      "title": "Instant Webhook & Settlement",
+      "body": "Orders mark as paid in real-time with automated webhook dispatch to your webstore.",
+      "accent": "#10B981",
+      "still": "/lets-scroll/still_04.svg",
+      "stillMobile": "/lets-scroll/still_04_mobile.svg",
+      "clip": "/lets-scroll/dive_04.mp4",
+      "clipMobile": "/lets-scroll/dive_04_mobile.mp4",
+      "tags": [
+        "Instant Webhook",
+        "Order Paid",
+        "Auto Fulfillment"
+      ],
+      "cta": {
+        "primary": {
+          "label": "Start Free Trial",
+          "href": "/register"
+        },
+        "secondary": {
+          "label": "API Documentation",
+          "href": "/docs"
+        }
+      }
+    }
+  ],
+  "connectors": [
+    "/lets-scroll/conn_01_to_02.mp4",
+    "/lets-scroll/conn_02_to_03.mp4",
+    "/lets-scroll/conn_03_to_04.mp4"
+  ],
+  "connectorsMobile": [
+    "/lets-scroll/conn_01_to_02_mobile.mp4",
+    "/lets-scroll/conn_02_to_03_mobile.mp4",
+    "/lets-scroll/conn_03_to_04_mobile.mp4"
+  ]
+}
