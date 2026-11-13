@@ -92,7 +92,7 @@ class WebhookService {
         if (healthRes.statusCode == 200) {
           return {
             'success': true,
-            'message': 'Webhook সার্ভার সম্পূর্ণ অনলাইন ও সক্রিয়! (${healthRes.body})',
+            'message': 'Webhook server is online and active! (${healthRes.body})',
           };
         }
       } catch (_) {}
@@ -118,23 +118,23 @@ class WebhookService {
       if (res.statusCode >= 200 && res.statusCode < 300) {
         return {
           'success': true,
-          'message': 'Webhook সফলভাবে সংযোগ স্থাপন করেছে! (HTTP ${res.statusCode})',
+          'message': 'Webhook connected successfully! (HTTP ${res.statusCode})',
         };
       } else if (res.statusCode == 401) {
         return {
           'success': false,
-          'message': 'অনুমোদন ব্যর্থ! Webhook Secret কি ভুল হয়েছে।',
+          'message': 'Authentication failed! Invalid Webhook Secret key.',
         };
       } else {
         return {
           'success': false,
-          'message': 'সার্ভার রেসপন্স কোড: ${res.statusCode}',
+          'message': 'Server response code: ${res.statusCode}',
         };
       }
     } catch (e) {
       return {
         'success': false,
-        'message': 'সংযোগ ব্যর্থ: $e',
+        'message': 'Connection failed: $e',
       };
     }
   }

@@ -56,7 +56,7 @@ class PermissionBanner extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "হাইব্রিড পেমেন্ট ট্র্যাকার সক্রিয় করুন",
+                      "Enable Hybrid Payment Tracker",
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w800,
@@ -66,7 +66,7 @@ class PermissionBanner extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      "যেকোনো একটি অপশন অন করলেই স্বয়ংক্রিয়ভাবে মেসেজ রিড হবে",
+                      "Enable either option to automatically capture incoming payment messages",
                       style: TextStyle(
                         fontSize: 12,
                         color: colors.textSecondary,
@@ -96,7 +96,7 @@ class PermissionBanner extends StatelessWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    "📌 অ্যান্ড্রয়েড ১৪, ১৫ ও ১৬ ব্যবহারকারী:\nযদি পারমিশন বন্ধ বা ধূসর দেখায়, তবে প্রথমে উপরে ডান পাশের ৩টি ডট (⋮) এ ক্লিক করে 'Allow restricted settings' অনুমোদন করুন, তারপর সুইচটি অন করুন।",
+                    "📌 Android 14, 15 & 16 Users:\nIf permission is disabled or greyed out, tap the 3 dots (⋮) in the top-right corner of App Info, select 'Allow restricted settings', and turn the switch on.",
                     style: TextStyle(
                       fontSize: 12,
                       color: colors.isDark ? const Color(0xFFFDE68A) : const Color(0xFF92400E),
@@ -133,7 +133,7 @@ class PermissionBanner extends StatelessWidget {
                         Icon(Icons.notifications_active_rounded, size: 16, color: Colors.white),
                         SizedBox(width: 6),
                         Text(
-                          "১. নোটিফিকেশন",
+                          "1. Notification Access",
                           style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Colors.white),
                         ),
                       ],
@@ -162,7 +162,7 @@ class PermissionBanner extends StatelessWidget {
                         Icon(Icons.sms_rounded, size: 16, color: Colors.white),
                         SizedBox(width: 6),
                         Text(
-                          "২. SMS পারমিশন",
+                          "2. SMS Permission",
                           style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Colors.white),
                         ),
                       ],
@@ -181,7 +181,7 @@ class PermissionBanner extends StatelessWidget {
               onPressed: () => showRestrictedSettingsGuide(context),
               icon: Icon(Icons.help_outline_rounded, size: 15, color: colors.accentCyan),
               label: Text(
-                "৩টি ডট (⋮) কীভাবে খুঁজে পাবেন? সচিত্র নিয়ম দেখুন",
+                "Can't find the 3 dots (⋮)? View Step-by-Step Guide",
                 style: TextStyle(
                   fontSize: 12,
                   color: colors.accentCyan,
@@ -246,7 +246,7 @@ class _RestrictedSettingsSheet extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "৩টি বাটনে (⋮) ক্লিক করে এলাউ করার নিয়ম",
+                        "How to Allow Restricted Settings (⋮)",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w800,
@@ -256,7 +256,7 @@ class _RestrictedSettingsSheet extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        "অ্যান্ড্রয়েড ১৪, ১৫ ও ১৬-এ রেস্ট্রিকশন তোলার সঠিক পদ্ধতি",
+                        "Bypassing Android 14, 15 & 16 Restricted Settings",
                         style: TextStyle(fontSize: 12, color: colors.textSecondary),
                       ),
                     ],
@@ -281,7 +281,7 @@ class _RestrictedSettingsSheet extends StatelessWidget {
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
-                      "মনে রাখবেন: Permissions বা Notifications সাব-মেনুতে ৩টি ডট থাকে না। ৩টি ডট পেতে নিচের বাটনে চাপ দিয়ে সরাসরি Payviro-এর প্রধান App Info পেইজে যান।",
+                      "Note: The 3 dots do not appear in Permissions or Notifications submenus. Tap the button below to go directly to the main App Info page.",
                       style: TextStyle(
                         fontSize: 12,
                         color: colors.isDark ? const Color(0xFFFDE68A) : const Color(0xFF92400E),
@@ -298,30 +298,30 @@ class _RestrictedSettingsSheet extends StatelessWidget {
 
             _buildStep(
               context: context,
-              number: "১",
-              title: "নিচের 'App Info পেইজে যান' বাটনে চাপ দিন",
-              desc: "এটি সরাসরি আপনার মোবাইলের Payviro প্রধান পেইজ খুলবে যেখানে Open, Uninstall থাকে।",
+              number: "1",
+              title: "Tap 'Go to App Info' below",
+              desc: "This directly opens the main Payviro App Info screen where Open and Uninstall buttons are located.",
               icon: Icons.settings_rounded,
             ),
             _buildStep(
               context: context,
-              number: "২",
-              title: "স্ক্রিনের একদম উপরে ডান কোণায় তাকান (৩টি ডট ⋮)",
-              desc: "স্ক্রিনের একদম উপরে ডান কর্নারে তিনটি উল্লম্ব ডট মেনু (⋮) দেখতে পাবেন।",
+              number: "2",
+              title: "Look at the top-right corner (3 dots ⋮)",
+              desc: "In the top-right corner of your screen, you will see a three-dot menu icon (⋮).",
               icon: Icons.more_vert_rounded,
             ),
             _buildStep(
               context: context,
-              number: "৩",
-              title: "'Allow restricted settings' এ চাপ দিয়ে এলাউ করুন",
-              desc: "বাংলায় থাকলে 'সীমাবদ্ধ সেটিংস অনুমোদন করুন'। এরপর ফিঙ্গারপ্রিন্ট বা পিন দিয়ে দিন।",
+              number: "3",
+              title: "Tap 'Allow restricted settings'",
+              desc: "Select 'Allow restricted settings' and authenticate using your fingerprint or PIN.",
               icon: Icons.fingerprint_rounded,
             ),
             _buildStep(
               context: context,
-              number: "৪",
-              title: "এবার যেকোনো একটি পারমিশন অন করে দিন",
-              desc: "অন করা মাত্রই এই সতর্কবার্তা পুরোপুরি চলে যাবে এবং মেসেজ রিড হওয়া শুরু হবে!",
+              number: "4",
+              title: "Enable either tracking permission",
+              desc: "Once enabled, this warning disappears immediately and incoming payments will be tracked automatically!",
               icon: Icons.check_circle_outline_rounded,
             ),
 
@@ -347,7 +347,7 @@ class _RestrictedSettingsSheet extends StatelessWidget {
                       Icon(Icons.open_in_new_rounded, color: Colors.white, size: 18),
                       SizedBox(width: 8),
                       Text(
-                        "App Info পেইজে যান (৩টি ডটের জন্য)",
+                        "Go to App Info (for 3 dots)",
                         style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white),
                       ),
                     ],

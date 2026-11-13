@@ -27,7 +27,7 @@ class _PaymentCardState extends State<PaymentCard> {
 
     try {
       if (!provider.isPaired) {
-        throw Exception("প্রথমে সেটিংস থেকে আপনার প্রাইভেট VPS সার্ভার সংযুক্ত করুন।");
+        throw Exception("Please connect your private VPS server in Settings first.");
       }
 
       final count = await provider.syncPending();
@@ -44,7 +44,7 @@ class _PaymentCardState extends State<PaymentCard> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    "পেমেন্ট (${widget.payment.trxId}) সফলভাবে VPS সার্ভারে সিঙ্ক হয়েছে!",
+                    "Payment (${widget.payment.trxId}) synced successfully to VPS server!",
                     style: TextStyle(color: colors.textPrimary, fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -58,7 +58,7 @@ class _PaymentCardState extends State<PaymentCard> {
           SnackBar(
             backgroundColor: colors.surfaceElevated,
             content: Text(
-              "পেমেন্টটি ইতিমধ্যে সার্ভারে আপলোড করা হয়েছে অথবা অপেক্ষমাণ নেই।",
+              "Payment is already uploaded or no pending payments found.",
               style: TextStyle(color: colors.textSecondary),
             ),
             behavior: SnackBarBehavior.floating,
@@ -71,7 +71,7 @@ class _PaymentCardState extends State<PaymentCard> {
       messenger.showSnackBar(
         SnackBar(
           backgroundColor: AppDesign.statusErrorBg,
-          content: Text("আপলোড ব্যর্থ: $e", style: const TextStyle(color: AppDesign.statusError)),
+          content: Text("Upload failed: $e", style: const TextStyle(color: AppDesign.statusError)),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -205,7 +205,7 @@ class _PaymentCardState extends State<PaymentCard> {
                         HapticFeedback.lightImpact();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text("TrxID (${widget.payment.trxId}) কপি হয়েছে!"),
+                            content: Text("UTR/Ref (${widget.payment.trxId}) copied!"),
                             duration: const Duration(seconds: 1),
                             behavior: SnackBarBehavior.floating,
                           ),
@@ -313,7 +313,7 @@ class _PaymentCardState extends State<PaymentCard> {
               Icon(Icons.cloud_done_rounded, size: 13, color: colors.success),
               const SizedBox(width: 5),
               Text(
-                "সার্ভার সিঙ্কড",
+                "Server Synced",
                 style: TextStyle(
                   color: colors.success,
                   fontSize: 11,
@@ -343,7 +343,7 @@ class _PaymentCardState extends State<PaymentCard> {
                     : Icon(Icons.refresh_rounded, size: 13, color: colors.error),
                 const SizedBox(width: 5),
                 Text(
-                  "সিঙ্ক ব্যর্থ • রিট্রাই",
+                  "Sync Failed • Retry",
                   style: TextStyle(
                     color: colors.error,
                     fontSize: 11,
@@ -373,7 +373,7 @@ class _PaymentCardState extends State<PaymentCard> {
                     : Icon(Icons.cloud_upload_rounded, size: 13, color: colors.warning),
                 const SizedBox(width: 5),
                 Text(
-                  "সিঙ্ক বাকি",
+                  "Pending Sync",
                   style: TextStyle(
                     color: colors.warning,
                     fontSize: 11,

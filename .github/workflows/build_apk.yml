@@ -79,12 +79,12 @@ jobs:
                       c += f'\n{dep}'
                   if is_kts:
                       c = re.sub(r'minSdk\s*=.*', 'minSdk = 23', c)
-                      c = re.sub(r'versionCode\s*=.*', 'versionCode = 5', c)
-                      c = re.sub(r'versionName\s*=.*', 'versionName = "2.3.0.0.1"', c)
+                      c = re.sub(r'versionCode\s*=.*', 'versionCode = 7', c)
+                      c = re.sub(r'versionName\s*=.*', 'versionName = "2.4.0"', c)
                   else:
                       c = re.sub(r'minSdkVersion\s+.*', 'minSdkVersion 23', c)
-                      c = re.sub(r'versionCode\s+.*', 'versionCode 5', c)
-                      c = re.sub(r'versionName\s+.*', 'versionName "2.3.0.0.1"', c)
+                      c = re.sub(r'versionCode\s+.*', 'versionCode 7', c)
+                      c = re.sub(r'versionName\s+.*', 'versionName "2.4.0"', c)
 
                   # Inject Tawhid Release Signing
                   if is_kts:
@@ -108,7 +108,9 @@ jobs:
         run: flutter pub get
 
       - name: Build Release APK
-        run: flutter build apk --release --build-name=2.3.0.0.1 --build-number=5
+        run: |
+          flutter build apk --release --build-name=2.4.0 --build-number=7
+          cp build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/Payviro-UPI-v2.4.0.apk
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
@@ -119,13 +121,14 @@ jobs:
       - name: Create or Update GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v2.3.0
-          name: Payviro UPI v2.3.0 — Indian UPI & Banking AutoPay Gateway
+          tag_name: v2.4.0
+          name: Payviro UPI v2.4.0 — Indian UPI & Banking AutoPay Gateway (Full English Edition)
           make_latest: true
           body: |
-            ## 🚀 Payviro UPI v2.3.0 — Indian UPI & Banking AutoPay Gateway Release
+            ## 🚀 Payviro UPI v2.4.0 — Indian UPI & Banking AutoPay Gateway Release (Full English Edition)
             
             ### ✨ Features:
+            - **100% English UI & Localization**: Full English interface, alert dialogs, restricted settings walkthrough, webhook telemetry, and background sync notifications.
             - **Indian UPI Support**: Real-time automated verification for PhonePe, Google Pay (GPay), Paytm, FamPay, BHIM, CRED, Amazon Pay, and all major Indian Banks (SBI, HDFC, ICICI, Axis, Kotak, PNB, etc.).
             - **12-Digit UTR Extraction**: Ultra-fast regex parsing capturing 12-digit UTR/RRN numbers and INR (₹) amounts.
             - **Webhook Auto-Sync**: Instant HTTP POST forwarding to Telegram bot / Cheapbot webhook endpoint (`/api/upi/webhook`).
@@ -134,7 +137,9 @@ jobs:
             - **Apple Liquid Glass UI**: Apple-inspired design with Dark (OLED) and Light mode, live status telemetry, and offline queue.
             
             ### 📥 Download:
-            Download `app-release.apk` below and install directly on your Android device.
-          files: build/app/outputs/flutter-apk/app-release.apk
+            Download `app-release.apk` or `Payviro-UPI-v2.4.0.apk` below and install directly on your Android device.
+          files: |
+            build/app/outputs/flutter-apk/app-release.apk
+            build/app/outputs/flutter-apk/Payviro-UPI-v2.4.0.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

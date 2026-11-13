@@ -86,7 +86,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         backgroundColor: colors.surfaceElevated,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
-          'Webhook সেটিংস এডিট করুন',
+          'Edit Webhook Settings',
           style: TextStyle(color: colors.textPrimary, fontWeight: FontWeight.w800, fontSize: 16),
         ),
         content: Column(
@@ -123,7 +123,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: Text('বাতিল', style: TextStyle(color: colors.textSecondary)),
+            child: Text('Cancel', style: TextStyle(color: colors.textSecondary)),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -132,7 +132,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('সংরক্ষণ করুন', style: TextStyle(fontWeight: FontWeight.w700)),
+            child: const Text('Save Settings', style: TextStyle(fontWeight: FontWeight.w700)),
           ),
         ],
       ),
@@ -150,7 +150,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Webhook কনফিগারেশন আপডেট হয়েছে!'),
+            content: const Text('Webhook configuration updated successfully!'),
             backgroundColor: colors.success,
             behavior: SnackBarBehavior.floating,
           ),
@@ -175,8 +175,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       _isTesting = false;
       _testSuccess = isAlive;
       _testResult = isAlive
-          ? "প্রাইভেট VPS সার্ভারের সাথে সংযোগ সফল ও সক্রিয়!"
-          : "সার্ভারের সাথে সংযোগ করা যায়নি। ইন্টারনেট ও সার্ভার ইউআরএল চেক করুন।";
+          ? "Connection to private VPS server successful and active!"
+          : "Could not connect to server. Please check internet connection and URL.";
     });
     if (isAlive) {
       HapticFeedback.mediumImpact();
@@ -204,7 +204,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         SnackBar(
           backgroundColor: colors.surfaceElevated,
           content: Text(
-            'সার্ভারের সাথে সংযোগ করা যায়নি। অনুগ্রহ করে ইন্টারনেট চেক করুন।',
+            'Could not connect to update server. Please check your internet connection.',
             style: TextStyle(color: colors.error),
           ),
         ),
@@ -222,17 +222,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
           backgroundColor: colors.surfaceElevated,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           title: Text(
-            'অ্যাপ্লিকেশন আপ-টু-ডেট আছে',
+            'Application is Up to Date',
             style: TextStyle(color: colors.success, fontSize: 16, fontWeight: FontWeight.w700),
           ),
           content: Text(
-            'আপনার ফোনে বর্তমান ভার্সন v${AppUpdateService.currentVersionName} (Build ${AppUpdateService.currentVersionCode}) সক্রিয় আছে। নতুন কোনো আপডেট নেই।',
+            'Your device is running the latest version v${AppUpdateService.currentVersionName} (Build ${AppUpdateService.currentVersionCode}). No new updates available.',
             style: TextStyle(color: colors.textSecondary, fontSize: 13, height: 1.4),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: Text('ঠিক আছে', style: TextStyle(color: colors.accent, fontWeight: FontWeight.w700)),
+              child: Text('OK', style: TextStyle(color: colors.accent, fontWeight: FontWeight.w700)),
             ),
           ],
         ),
@@ -249,17 +249,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
         backgroundColor: colors.surfaceElevated,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
-          'ডিভাইস বিচ্ছিন্ন করবেন?',
+          'Unpair Device?',
           style: TextStyle(color: colors.error, fontWeight: FontWeight.w800, fontSize: 17),
         ),
         content: Text(
-          'সংযোগ বিচ্ছিন্ন করলে এই ডিভাইস থেকে আপনার প্রাইভেট সার্ভারে পেমেন্ট সিঙ্ক বন্ধ থাকবে। পুনরায় চালু করতে লাইসেন্স কি প্রয়োজন হবে।',
+          'Unpairing will disconnect this device from your private server. Incoming payments will not sync until re-activated with your license key.',
           style: TextStyle(color: colors.textSecondary, fontSize: 13, height: 1.4),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: Text('বাতিল', style: TextStyle(color: colors.textSecondary, fontWeight: FontWeight.w600)),
+            child: Text('Cancel', style: TextStyle(color: colors.textSecondary, fontWeight: FontWeight.w600)),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -268,7 +268,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             ),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('বিচ্ছিন্ন করুন', style: TextStyle(fontWeight: FontWeight.w700)),
+            child: const Text('Unpair', style: TextStyle(fontWeight: FontWeight.w700)),
           ),
         ],
       ),
@@ -300,7 +300,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       backgroundColor: colors.bgPrimary,
       appBar: AppBar(
         title: Text(
-          "সার্ভার ও ডিভাইস সেটিংস",
+          "Server & Device Settings",
           style: TextStyle(fontWeight: FontWeight.w700, color: colors.textPrimary, fontSize: 18),
         ),
         backgroundColor: colors.bgPrimary,
@@ -360,7 +360,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "অ্যাপ থিম ও ডিসপ্লে",
+                              "App Theme & Display",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w800,
@@ -370,10 +370,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             const SizedBox(height: 2),
                             Text(
                               themeProvider.themeMode == ThemeMode.system
-                                  ? "সিস্টেম অনুযায়ী স্বয়ংক্রিয়ভাবে অ্যাডাপ্ট হবে (ডিফল্ট)"
+                                  ? "Automatically adapts to system appearance (Default)"
                                   : (themeProvider.themeMode == ThemeMode.light
-                                      ? "লাইট মোড (Pearl White HIG)"
-                                      : "ডার্ক মোড (OLED Black)"),
+                                      ? "Light Mode (Pearl White HIG)"
+                                      : "Dark Mode (OLED Black)"),
                               style: TextStyle(
                                 fontSize: 12,
                                 color: colors.textSecondary,
@@ -390,17 +390,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     items: const [
                       LiquidSegmentItem(
                         value: ThemeMode.system,
-                        label: "সিস্টেম",
+                        label: "System",
                         symbol: "⚙️",
                       ),
                       LiquidSegmentItem(
                         value: ThemeMode.light,
-                        label: "লাইট",
+                        label: "Light",
                         symbol: "☀️",
                       ),
                       LiquidSegmentItem(
                         value: ThemeMode.dark,
-                        label: "ডার্ক",
+                        label: "Dark",
                         symbol: "🌙",
                       ),
                     ],
@@ -457,7 +457,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "UPI Webhook গেটওয়ে",
+                              "UPI Webhook Gateway",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w800,
@@ -491,7 +491,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   const SizedBox(height: 8),
                   _buildInfoRow(context, "Secret Key", "••••••••"),
                   const SizedBox(height: 8),
-                  _buildInfoRow(context, "মুদ্রা", "₹ INR (ভারতীয় রুপি)"),
+                  _buildInfoRow(context, "Currency", "₹ INR (Indian Rupee)"),
 
                   const SizedBox(height: 16),
 
@@ -502,7 +502,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     width: double.infinity,
                     isLoading: _isTestingWebhook,
                     child: Text(
-                      _isTestingWebhook ? "Webhook পরীক্ষা করা হচ্ছে..." : "Webhook সংযোগ পরীক্ষা করুন (Ping)",
+                      _isTestingWebhook ? "Testing Webhook..." : "Test Webhook Connection (Ping)",
                       style: TextStyle(
                         color: colors.accent,
                         fontWeight: FontWeight.w700,
@@ -584,7 +584,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "প্রাইভেট VPS সার্ভার",
+                              "Private VPS Server",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w800,
@@ -616,7 +616,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                         ),
                         child: Text(
-                          session.isPaired ? "সংযুক্ত" : "বিচ্ছিন্ন",
+                          session.isPaired ? "Connected" : "Disconnected",
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w700,
@@ -631,11 +631,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   const SizedBox(height: 12),
 
                   // Merchant Details
-                  _buildInfoRow(context, "মার্চেন্ট অ্যাকাউন্ট", session.businessName.isNotEmpty ? session.businessName : "অজানা"),
+                  _buildInfoRow(context, "Merchant Account", session.businessName.isNotEmpty ? session.businessName : "Unknown"),
                   const SizedBox(height: 10),
-                  _buildInfoRow(context, "লাইসেন্স কি", session.licenseKey.isNotEmpty ? session.licenseKey : "—"),
+                  _buildInfoRow(context, "License Key", session.licenseKey.isNotEmpty ? session.licenseKey : "—"),
                   const SizedBox(height: 10),
-                  _buildInfoRow(context, "প্ল্যান", session.plan.toUpperCase()),
+                  _buildInfoRow(context, "Plan", session.plan.toUpperCase()),
 
                   const SizedBox(height: 18),
 
@@ -646,7 +646,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     width: double.infinity,
                     isLoading: _isTesting,
                     child: Text(
-                      _isTesting ? "সার্ভার পরীক্ষা করা হচ্ছে..." : "VPS সার্ভার পিং টেস্ট",
+                      _isTesting ? "Testing Server..." : "VPS Server Ping Test",
                       style: TextStyle(
                         color: colors.accent,
                         fontWeight: FontWeight.w700,
@@ -712,7 +712,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "সিস্টেম আপগ্রেড",
+                            "System Upgrade",
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w800,
@@ -721,7 +721,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           const SizedBox(height: 2),
                           Text(
-                            "বর্তমান ভার্সন: v${AppUpdateService.currentVersionName} (Build ${AppUpdateService.currentVersionCode})",
+                            "Current Version: v${AppUpdateService.currentVersionName} (Build ${AppUpdateService.currentVersionCode})",
                             style: TextStyle(
                               fontSize: 12,
                               color: colors.textSecondary,
@@ -737,7 +737,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           border: Border.all(color: colors.success.withValues(alpha: 0.3)),
                         ),
                         child: Text(
-                          "সক্রিয়",
+                          "Active",
                           style: TextStyle(
                             color: colors.success,
                             fontSize: 11,
@@ -754,7 +754,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     width: double.infinity,
                     isLoading: _isCheckingUpdate,
                     child: Text(
-                      _isCheckingUpdate ? "আপডেট চেক করা হচ্ছে..." : "সিস্টেম আপডেট চেক করুন",
+                      _isCheckingUpdate ? "Checking for Updates..." : "Check for Updates",
                       style: TextStyle(
                         color: colors.accent,
                         fontWeight: FontWeight.w700,
@@ -772,7 +772,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 4, bottom: 8),
               child: Text(
-                "সিস্টেম ও অটোমেশন পারমিশন",
+                "System & Automation Permissions",
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
@@ -803,8 +803,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     context: context,
                     badgeText: "SMS",
                     badgeBg: colors.accentCyan,
-                    title: "এসএমএস রিডার",
-                    subtitle: "PhonePe, Paytm, GPay ও ব্যাংক SMS শনাক্ত করতে",
+                    title: "SMS Reader",
+                    subtitle: "Capture PhonePe, Paytm, GPay & Bank SMS",
                     trailing: CupertinoSwitch(
                       value: provider.hasSmsPermission,
                       activeTrackColor: colors.success,
@@ -821,8 +821,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     context: context,
                     badgeText: "POP",
                     badgeBg: colors.warning,
-                    title: "নোটিফিকেশন লিসেনার",
-                    subtitle: "PhonePe, GPay, Paytm ইনস্ট্যান্ট পপ-আপ ডিটেক্ট করতে",
+                    title: "Notification Listener",
+                    subtitle: "Capture instant UPI pop-ups from PhonePe, GPay, Paytm",
                     trailing: CupertinoSwitch(
                       value: provider.isNotificationListenerEnabled,
                       activeTrackColor: colors.success,
@@ -836,10 +836,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     context: context,
                     badgeText: "BAT",
                     badgeBg: colors.success,
-                    title: "ব্যাটারি অপটিমাইজেশন বন্ধ",
-                    subtitle: "২৪ ঘণ্টা নিরবচ্ছিন্নভাবে ব্যাকগ্রাউন্ডে চালু রাখতে",
+                    title: "Disable Battery Optimization",
+                    subtitle: "Keep running 24/7 continuously in background",
                     trailing: Text(
-                      "চালু করুন",
+                      "Enable",
                       style: TextStyle(color: colors.accent, fontSize: 12, fontWeight: FontWeight.w600),
                     ),
                     onTap: () async {
@@ -851,8 +851,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     context: context,
                     badgeText: "A16",
                     badgeBg: AppDesign.phonepe,
-                    title: "Android 14/15/16 রেস্ট্রিক্টেড সেটিংস",
-                    subtitle: "পারমিশন অপশন ধূসর (Greyed out) থাকলে সচিত্র সমাধান",
+                    title: "Android 14/15/16 Restricted Settings",
+                    subtitle: "Step-by-step guide if permissions are greyed out",
                     trailing: Icon(Icons.chevron_right_rounded, color: colors.textSecondary),
                     onTap: () {
                       PermissionBanner.showRestrictedSettingsGuide(context);
@@ -873,7 +873,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 border: Border.all(color: colors.borderSubtle),
               ),
               child: Text(
-                "Payviro UPI শুধুমাত্র আপনার ফোনে আসা পেমেন্ট নোটিফিকেশন ও এসএমএস শনাক্ত করে সরাসরি আপনার টেলিগ্রাম বট / Webhook সার্ভারে পাঠিয়ে দেয়। সমস্ত ডেটা আপনার নিজস্ব নিয়ন্ত্রণে থাকে।",
+                "Payviro UPI captures payment notifications and SMS on your device and relays them directly to your Telegram bot or Webhook server in real-time. All data remains under your full control.",
                 style: TextStyle(color: colors.textSecondary, fontSize: 12.5, height: 1.45),
               ),
             ),
@@ -887,7 +887,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               width: double.infinity,
               height: 50,
               child: const Text(
-                "ডিভাইস সংযোগ বিচ্ছিন্ন করুন (Unpair)",
+                "Unpair Device",
                 style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
               ),
             ),
@@ -909,7 +909,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    "নিরাপদ ও নির্ভরযোগ্য পেমেন্ট অটোমেশন",
+                    "Secure & Reliable Payment Automation",
                     style: TextStyle(
                       color: colors.textMuted,
                       fontSize: 10.5,

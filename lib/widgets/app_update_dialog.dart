@@ -64,7 +64,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
       _isAlreadyDownloaded = exists;
       _isCheckingLocal = false;
       if (exists) {
-        _statusText = 'ফাইল পূর্বে ডাউনলোড করা হয়েছে এবং মেমোরিতে প্রস্তুত আছে।';
+        _statusText = 'File was previously downloaded and ready in local storage.';
       }
     });
   }
@@ -73,7 +73,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
     HapticFeedback.mediumImpact();
     setState(() {
       _errorMessage = null;
-      _statusText = 'প্যাকেজ ইনস্টলার চালু হচ্ছে...';
+      _statusText = 'Launching package installer...';
     });
 
     try {
@@ -82,13 +82,13 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
 
       if (success) {
         setState(() {
-          _statusText = 'ইনস্টলেশন প্রক্রিয়া শুরু হয়েছে।';
+          _statusText = 'Installation process initiated.';
         });
       }
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _errorMessage = 'ইনস্টলার শুরু করা যায়নি: $e';
+        _errorMessage = 'Could not launch installer: $e';
         _statusText = null;
       });
     }
@@ -101,8 +101,8 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
       _downloadProgress = 0.0;
       _errorMessage = null;
       _statusText = isRedownload
-          ? 'পূর্বের ফাইল মুছে নতুন করে ডাউনলোড শুরু হচ্ছে...'
-          : 'নতুন ভার্সন ডাউনলোড হচ্ছে...';
+          ? 'Clearing previous file and starting fresh download...'
+          : 'Downloading new version...';
     });
 
     try {
@@ -117,9 +117,9 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
           setState(() {
             _downloadProgress = progress;
             if (progress >= 0) {
-              _statusText = 'ডাউনলোড হচ্ছে ${(progress * 100).toStringAsFixed(0)}%';
+              _statusText = 'Downloading ${(progress * 100).toStringAsFixed(0)}%';
             } else {
-              _statusText = 'ডাউনলোড চলছে, অনুগ্রহ করে অপেক্ষা করুন...';
+              _statusText = 'Download in progress, please wait...';
             }
           });
         },
@@ -127,7 +127,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
           if (!mounted) return;
           setState(() {
             _isDownloading = false;
-            _errorMessage = 'ডাউনলোড ব্যর্থ হয়েছে: $err';
+            _errorMessage = 'Download failed: $err';
             _statusText = null;
           });
         },
@@ -137,7 +137,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
             _isDownloading = false;
             _isAlreadyDownloaded = true;
             _downloadProgress = 1.0;
-            _statusText = 'ডাউনলোড সফলভাবে সম্পন্ন হয়েছে!';
+            _statusText = 'Download completed successfully!';
           });
 
           // Automatically trigger package installation after successful download
@@ -149,7 +149,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
       if (!mounted) return;
       setState(() {
         _isDownloading = false;
-        _errorMessage = 'ডাউনলোড শুরু করা যায়নি: $e';
+        _errorMessage = 'Failed to start download: $e';
         _statusText = null;
       });
     }
@@ -193,7 +193,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                     ),
                   ),
                   child: Text(
-                    info.isForceUpdate ? 'জরুরি সিস্টেম আপডেট' : 'নতুন ভার্সন আপডেট',
+                    info.isForceUpdate ? 'CRITICAL SYSTEM UPDATE' : 'NEW VERSION UPDATE',
                     style: TextStyle(
                       color: info.isForceUpdate ? AppDesign.statusError : AppDesign.accentBlue,
                       fontSize: 11,
@@ -224,7 +224,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
 
             // Title
             Text(
-              'সিস্টেম আপগ্রেড প্রস্তুত',
+              'System Upgrade Ready',
               style: TextStyle(
                 color: colors.textPrimary,
                 fontSize: 20,
@@ -246,7 +246,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'বর্তমান ভার্সন: ${AppUpdateService.currentVersionName}',
+                    'Current: v${AppUpdateService.currentVersionName}',
                     style: TextStyle(
                       color: colors.textTertiary,
                       fontSize: 12,
@@ -254,7 +254,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                     ),
                   ),
                   Text(
-                    'নতুন: ${info.versionName}',
+                    'New: v${info.versionName}',
                     style: const TextStyle(
                       color: AppDesign.statusSuccess,
                       fontSize: 12,
@@ -269,7 +269,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
             // Changelog Box
             if (info.changelog.trim().isNotEmpty) ...[
               Text(
-                'নতুন কি ফিচার যোগ হয়েছে:',
+                'What\'s New in this Release:',
                 style: TextStyle(
                   color: colors.textSecondary,
                   fontSize: 12,
@@ -313,7 +313,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'ফাইল ইতিমধ্যে ডাউনলোড করা আছে',
+                      'File Already Downloaded',
                       style: TextStyle(
                         color: AppDesign.statusSuccess,
                         fontSize: 12,
@@ -322,7 +322,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'পুনরায় ডাউনলোড করার প্রয়োজন নেই। সরাসরি ইনস্টল করুন।',
+                      'No need to re-download. Tap below to install directly.',
                       style: TextStyle(
                         color: colors.textSecondary,
                         fontSize: 11,
@@ -348,7 +348,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'ডাউনলোড অগ্রগতি',
+                          'Download Progress',
                           style: TextStyle(
                             color: colors.textSecondary,
                             fontSize: 12,
@@ -358,7 +358,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                         Text(
                           _downloadProgress >= 0
                               ? '${(_downloadProgress * 100).toStringAsFixed(0)}%'
-                              : 'প্রসেসিং...',
+                              : 'Processing...',
                           style: const TextStyle(
                             color: AppDesign.accentCyan,
                             fontSize: 13,
@@ -429,7 +429,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Text(
-                    'স্টোরেজ যাচাই করা হচ্ছে...',
+                    'Checking storage...',
                     style: TextStyle(color: colors.textTertiary, fontSize: 13),
                   ),
                 ),
@@ -443,7 +443,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                 ),
                 alignment: Alignment.center,
                 child: Text(
-                  'ডাউনলোড হচ্ছে, অপেক্ষা করুন...',
+                  'Downloading, please wait...',
                   style: TextStyle(
                     color: colors.textTertiary,
                     fontSize: 14,
@@ -459,7 +459,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                 borderRadius: BorderRadius.circular(12),
                 backgroundColor: AppDesign.statusSuccess,
                 child: const Text(
-                  'সরাসরি ইনস্টল করুন',
+                  'Install Now',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
@@ -479,7 +479,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   ),
                   child: const Text(
-                    'পুনরায় ডাউনলোড করুন',
+                    'Re-download APK',
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
@@ -495,7 +495,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
                 borderRadius: BorderRadius.circular(12),
                 backgroundColor: AppDesign.accentBlue,
                 child: const Text(
-                  'আপগ্রেড ডাউনলোড করুন',
+                  'Download Upgrade',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
@@ -511,7 +511,7 @@ class _AppUpdateDialogState extends State<AppUpdateDialog> {
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
                 child: Text(
-                  'পরে করুন',
+                  'Later',
                   style: TextStyle(
                     color: colors.textTertiary,
                     fontSize: 13,

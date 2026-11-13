@@ -32,7 +32,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
     final provider = context.read<PaymentProvider>();
     try {
       if (!provider.isPaired) {
-        throw Exception("প্রথমে সেটিংস থেকে আপনার প্রাইভেট VPS সার্ভার সংযুক্ত করুন।");
+        throw Exception("Please connect your private VPS server in Settings first.");
       }
 
       await provider.syncPending();
@@ -48,7 +48,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: AppDesign.statusSuccess,
-            content: Text("VPS সার্ভারে সফলভাবে সিঙ্ক সম্পন্ন হয়েছে!", style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white)),
+            content: Text("Payment synced successfully to VPS server!", style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white)),
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -60,7 +60,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: AppDesign.statusErrorBg,
-            content: Text("সিঙ্ক ব্যর্থ: $e", style: const TextStyle(color: AppDesign.statusError)),
+            content: Text("Sync failed: $e", style: const TextStyle(color: AppDesign.statusError)),
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -78,7 +78,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: AppBar(
-        title: Text("পেমেন্ট বিস্তারিত", style: TextStyle(fontWeight: FontWeight.w700, color: colors.textPrimary, fontSize: 18)),
+        title: Text("Payment Details", style: TextStyle(fontWeight: FontWeight.w700, color: colors.textPrimary, fontSize: 18)),
         backgroundColor: colors.background,
         elevation: 0,
         leading: IconButton(
@@ -143,7 +143,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
                       border: Border.all(color: colors.border),
                     ),
                     child: Text(
-                      "ধরন: ${_payment.paymentType.toUpperCase()}",
+                      "Type: ${_payment.paymentType.toUpperCase()}",
                       style: TextStyle(color: colors.textSecondary, fontSize: 11.5, fontWeight: FontWeight.w700),
                     ),
                   ),
@@ -163,7 +163,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
                   _buildDetailRow(
                     context: context,
                     icon: Icons.vpn_key_rounded,
-                    title: "Transaction ID (TrxID)",
+                    title: "UTR / Transaction ID",
                     value: _payment.trxId,
                     isMonospace: true,
                     showCopy: true,
@@ -172,7 +172,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
                   _buildDetailRow(
                     context: context,
                     icon: Icons.phone_android_rounded,
-                    title: "প্রেরকের নম্বর (Sender)",
+                    title: "Sender Phone / VPA",
                     value: _payment.sender,
                     showCopy: true,
                   ),
@@ -180,23 +180,23 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
                   _buildDetailRow(
                     context: context,
                     icon: Icons.bookmark_border_rounded,
-                    title: "রেফারেন্স (Reference)",
+                    title: "Reference",
                     value: (_payment.reference != null && _payment.reference!.isNotEmpty)
                         ? _payment.reference!
-                        : "কোনো রেফারেন্স নেই",
+                        : "No reference",
                   ),
                   Divider(height: 1, color: colors.border),
                   _buildDetailRow(
                     context: context,
                     icon: Icons.schedule_rounded,
-                    title: "মেসেজের সময় (Timestamp)",
+                    title: "Message Timestamp",
                     value: dateFormatter.format(_payment.timestamp),
                   ),
                   Divider(height: 1, color: colors.border),
                   _buildDetailRow(
                     context: context,
                     icon: Icons.cloud_sync_rounded,
-                    title: "সার্ভার সিঙ্ক স্ট্যাটাস",
+                    title: "Server Sync Status",
                     valueWidget: _buildStatusWidget(),
                   ),
                 ],
@@ -210,7 +210,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "আসল SMS টেক্সট (Raw SMS):",
+                  "Raw SMS Text:",
                   style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: colors.textSecondary),
                 ),
                 InkWell(
@@ -219,7 +219,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
                     HapticFeedback.lightImpact();
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text("মেসেজ কপি হয়েছে!"),
+                        content: Text("Message copied!"),
                         duration: Duration(seconds: 1),
                         behavior: SnackBarBehavior.floating,
                       ),
@@ -229,7 +229,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
                     children: [
                       Icon(Icons.copy_rounded, size: 14, color: AppDesign.accentCyan),
                       SizedBox(width: 4),
-                      Text("কপি", style: TextStyle(fontSize: 12, color: AppDesign.accentCyan, fontWeight: FontWeight.w600)),
+                      Text("Copy", style: TextStyle(fontSize: 12, color: AppDesign.accentCyan, fontWeight: FontWeight.w600)),
                     ],
                   ),
                 ),
@@ -267,7 +267,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
                         : const Icon(Icons.cloud_upload_rounded, color: Colors.white, size: 18),
                     const SizedBox(width: 8),
                     Text(
-                      _isSyncing ? "সিঙ্ক হচ্ছে..." : "এখনই সার্ভারে সিঙ্ক করুন",
+                      _isSyncing ? "Syncing..." : "Sync to Server Now",
                       style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14),
                     ),
                   ],
@@ -326,7 +326,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
                 Clipboard.setData(ClipboardData(text: value));
                 HapticFeedback.lightImpact();
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("$title কপি হয়েছে!"), duration: const Duration(seconds: 1), behavior: SnackBarBehavior.floating),
+                  SnackBar(content: Text("$title copied!"), duration: const Duration(seconds: 1), behavior: SnackBarBehavior.floating),
                 );
               },
             ),
@@ -342,7 +342,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
           children: [
             Icon(Icons.check_circle_rounded, color: AppDesign.statusSuccess, size: 15),
             SizedBox(width: 6),
-            Text("সার্ভারে সফলভাবে সিঙ্ক সম্পন্ন হয়েছে", style: TextStyle(color: AppDesign.statusSuccess, fontWeight: FontWeight.w700, fontSize: 13)),
+            Text("Successfully synced to server", style: TextStyle(color: AppDesign.statusSuccess, fontWeight: FontWeight.w700, fontSize: 13)),
           ],
         );
       case SyncStatus.failed:
@@ -352,7 +352,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
             const SizedBox(width: 6),
             Expanded(
               child: Text(
-                "ব্যর্থ: ${_payment.syncError ?? 'অজানা ত্রুটি'}",
+                "Failed: ${_payment.syncError ?? 'Unknown error'}",
                 style: const TextStyle(color: AppDesign.statusError, fontWeight: FontWeight.w600, fontSize: 13),
               ),
             ),
@@ -363,7 +363,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
           children: [
             Icon(Icons.hourglass_bottom_rounded, color: AppDesign.statusWarning, size: 15),
             SizedBox(width: 6),
-            Text("অপেক্ষমাণ (ইন্টারনেট পেলে স্বয়ংক্রিয়ভাবে আপলোড হবে)", style: TextStyle(color: AppDesign.statusWarning, fontWeight: FontWeight.w700, fontSize: 13)),
+            Text("Pending (Will upload automatically when online)", style: TextStyle(color: AppDesign.statusWarning, fontWeight: FontWeight.w700, fontSize: 13)),
           ],
         );
     }

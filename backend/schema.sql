@@ -3,7 +3,7 @@
 -- Compatible with SQLite, PostgreSQL, and MySQL
 -- ====================================================================
 
--- 1. মার্চেন্ট অ্যাকাউন্টস (Merchants)
+-- 1. Merchants
 CREATE TABLE IF NOT EXISTS merchants (
     id VARCHAR(64) PRIMARY KEY,
     email VARCHAR(191) UNIQUE NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS merchants (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 2. সাবস্ক্রিপশন ও লাইসেন্স কি (Subscriptions & License Keys)
+-- 2. Subscriptions & License Keys
 CREATE TABLE IF NOT EXISTS subscriptions (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS subscriptions (
     FOREIGN KEY (merchant_id) REFERENCES merchants(id) ON DELETE CASCADE
 );
 
--- সাবস্ক্রিপশন অর্ডার (Subscription Orders)
+-- Subscription Orders
 CREATE TABLE IF NOT EXISTS subscription_orders (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS subscription_orders (
     FOREIGN KEY (merchant_id) REFERENCES merchants(id) ON DELETE CASCADE
 );
 
--- 3. মার্চেন্ট এপিআই কি (API Keys)
+-- 3. API Keys
 CREATE TABLE IF NOT EXISTS api_keys (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS api_keys (
     FOREIGN KEY (merchant_id) REFERENCES merchants(id) ON DELETE CASCADE
 );
 
--- 4. কানেক্টেড মোবাইল ফোন (Android Relay Devices)
+-- 4. Connected Mobile Devices (Android Relay Devices)
 CREATE TABLE IF NOT EXISTS devices (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS devices (
     FOREIGN KEY (merchant_id) REFERENCES merchants(id) ON DELETE CASCADE
 );
 
--- সাবস্ক্রিপশন অর্ডার (Subscription Orders)
+-- Subscription Orders
 CREATE TABLE IF NOT EXISTS subscription_orders (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS subscription_orders (
     FOREIGN KEY (merchant_id) REFERENCES merchants(id) ON DELETE CASCADE
 );
 
--- 5. মার্চেন্ট এমএফএস নম্বরসমূহ (bKash / Nagad / Rocket Accounts)
+-- 5. Merchant Accounts (UPI / Bank Accounts)
 CREATE TABLE IF NOT EXISTS mfs_accounts (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS mfs_accounts (
     FOREIGN KEY (merchant_id) REFERENCES merchants(id) ON DELETE CASCADE
 );
 
--- সাবস্ক্রিপশন অর্ডার (Subscription Orders)
+-- Subscription Orders
 CREATE TABLE IF NOT EXISTS subscription_orders (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS subscription_orders (
     FOREIGN KEY (merchant_id) REFERENCES merchants(id) ON DELETE CASCADE
 );
 
--- 6. পেমেন্ট অর্ডার (Customer Payment Orders)
+-- 6. Customer Payment Orders
 CREATE TABLE IF NOT EXISTS payment_orders (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS payment_orders (
     FOREIGN KEY (merchant_id) REFERENCES merchants(id) ON DELETE CASCADE
 );
 
--- সাবস্ক্রিপশন অর্ডার (Subscription Orders)
+-- Subscription Orders
 CREATE TABLE IF NOT EXISTS subscription_orders (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS subscription_orders (
     FOREIGN KEY (merchant_id) REFERENCES merchants(id) ON DELETE CASCADE
 );
 
--- 7. মোবাইল থেকে আসা আসল ট্রানজ্যাকশন (Synced Transactions from Phones)
+-- 7. Synced Transactions from Phones
 CREATE TABLE IF NOT EXISTS transactions (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -191,7 +191,7 @@ CREATE TABLE IF NOT EXISTS transactions (
     FOREIGN KEY (matched_order_id) REFERENCES payment_orders(id) ON DELETE SET NULL
 );
 
--- 8. ওয়েবহুক কনফিগারেশন (Merchant Webhook Endpoints)
+-- 8. Webhook Configuration (Merchant Webhook Endpoints)
 CREATE TABLE IF NOT EXISTS webhooks (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -203,7 +203,7 @@ CREATE TABLE IF NOT EXISTS webhooks (
     FOREIGN KEY (merchant_id) REFERENCES merchants(id) ON DELETE CASCADE
 );
 
--- সাবস্ক্রিপশন অর্ডার (Subscription Orders)
+-- Subscription Orders
 CREATE TABLE IF NOT EXISTS subscription_orders (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -221,7 +221,7 @@ CREATE TABLE IF NOT EXISTS subscription_orders (
     FOREIGN KEY (merchant_id) REFERENCES merchants(id) ON DELETE CASCADE
 );
 
--- 9. ওয়েবহুক ডেলিভারি হিস্ট্রি ও রিট্রাই কিউ (Webhook Delivery Log)
+-- 9. Webhook Delivery History & Retry Queue
 CREATE TABLE IF NOT EXISTS webhook_deliveries (
     id VARCHAR(64) PRIMARY KEY,
     webhook_id VARCHAR(64) NOT NULL,
@@ -238,7 +238,7 @@ CREATE TABLE IF NOT EXISTS webhook_deliveries (
     FOREIGN KEY (webhook_id) REFERENCES webhooks(id) ON DELETE CASCADE
 );
 
--- 10. অডিট লগ (System Security & Audit Logs)
+-- 10. System Security & Audit Logs
 CREATE TABLE IF NOT EXISTS audit_logs (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64),
@@ -249,7 +249,7 @@ CREATE TABLE IF NOT EXISTS audit_logs (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 11. পেমেন্ট লিংক (Social & Direct Payment Links)
+-- 11. Payment Links (Social & Direct Payment Links)
 CREATE TABLE IF NOT EXISTS payment_links (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -269,7 +269,7 @@ CREATE TABLE IF NOT EXISTS payment_links (
     FOREIGN KEY (merchant_id) REFERENCES merchants(id) ON DELETE CASCADE
 );
 
--- 12. ডিজিটাল ইনভয়েস সিস্টেম (Itemized Digital Invoices)
+-- 12. Itemized Digital Invoices
 CREATE TABLE IF NOT EXISTS invoices (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -301,7 +301,7 @@ CREATE TABLE IF NOT EXISTS invoices (
     FOREIGN KEY (paid_order_id) REFERENCES payment_orders(id) ON DELETE SET NULL
 );
 
--- 13. আইডেমপোটেন্সি কিউ (Idempotency Keys for Duplicate Protection)
+-- 13. Idempotency Keys (Duplicate Protection)
 CREATE TABLE IF NOT EXISTS idempotency_keys (
     id VARCHAR(64) PRIMARY KEY,
     idempotency_key VARCHAR(128) NOT NULL,
@@ -317,7 +317,7 @@ CREATE TABLE IF NOT EXISTS idempotency_keys (
     UNIQUE(merchant_id, idempotency_key)
 );
 
--- 14. এআই অ্যাসিস্ট্যান্ট কনভারসেশনস (AI Payment Assistant Threads)
+-- 14. AI Payment Assistant Threads
 CREATE TABLE IF NOT EXISTS ai_conversations (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -328,7 +328,7 @@ CREATE TABLE IF NOT EXISTS ai_conversations (
     FOREIGN KEY (merchant_id) REFERENCES merchants(id) ON DELETE CASCADE
 );
 
--- 15. বিজনেস প্রোফাইল (Business Profiles & Branding)
+-- 15. Business Profiles & Branding
 CREATE TABLE IF NOT EXISTS business_profiles (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) UNIQUE NOT NULL,
@@ -350,7 +350,7 @@ CREATE TABLE IF NOT EXISTS business_profiles (
     FOREIGN KEY (merchant_id) REFERENCES merchants(id) ON DELETE CASCADE
 );
 
--- 16. কাস্টমার ডেটাবেস / ডিজিটাল খাতা (Customer Management Ledger)
+-- 16. Customer Management Ledger
 CREATE TABLE IF NOT EXISTS customers (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -366,7 +366,7 @@ CREATE TABLE IF NOT EXISTS customers (
     FOREIGN KEY (merchant_id) REFERENCES merchants(id) ON DELETE CASCADE
 );
 
--- 17. পেমেন্ট রিসিট (Verified Payment Receipts)
+-- 17. Verified Payment Receipts
 CREATE TABLE IF NOT EXISTS payment_receipts (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -388,7 +388,7 @@ CREATE TABLE IF NOT EXISTS payment_receipts (
     FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE
 );
 
--- 18. আউটসোর্সিং / ফ্রিল্যান্সার প্রজেক্ট ট্র্যাকিং (Projects & Freelance Work)
+-- 18. Projects & Freelance Work Tracking
 CREATE TABLE IF NOT EXISTS projects (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -411,7 +411,7 @@ CREATE TABLE IF NOT EXISTS projects (
     FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE
 );
 
--- 19. রিকারিং সাবস্ক্রিপশন / মান্থলি বিলিং (Recurring Invoices & Subscriptions)
+-- 19. Recurring Invoices & Subscriptions
 CREATE TABLE IF NOT EXISTS recurring_bills (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -429,7 +429,7 @@ CREATE TABLE IF NOT EXISTS recurring_bills (
     FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE
 );
 
--- 20. খরচ ট্র্যাকিং (Business Expenses Tracking)
+-- 20. Business Expenses Tracking
 CREATE TABLE IF NOT EXISTS expenses (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -444,7 +444,7 @@ CREATE TABLE IF NOT EXISTS expenses (
     FOREIGN KEY (merchant_id) REFERENCES merchants(id) ON DELETE CASCADE
 );
 
--- সাবস্ক্রিপশন অর্ডার (Subscription Orders)
+-- Subscription Orders
 CREATE TABLE IF NOT EXISTS subscription_orders (
     id VARCHAR(64) PRIMARY KEY,
     merchant_id VARCHAR(64) NOT NULL,
@@ -462,7 +462,7 @@ CREATE TABLE IF NOT EXISTS subscription_orders (
     FOREIGN KEY (merchant_id) REFERENCES merchants(id) ON DELETE CASCADE
 );
 
--- ইনডেক্সিং (High Performance Fast Search Indexes)
+-- Indexes (High Performance Fast Search Indexes)
 CREATE INDEX IF NOT EXISTS idx_transactions_trx_id ON transactions(trx_id);
 CREATE INDEX IF NOT EXISTS idx_transactions_merchant ON transactions(merchant_id);
 CREATE INDEX IF NOT EXISTS idx_payment_orders_status ON payment_orders(status);

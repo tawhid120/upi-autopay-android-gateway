@@ -84,8 +84,8 @@ X-Gateway-Secret: mvpay_secret_2026
      4. Return to Payviro UPI and toggle **Notification Listener** and **SMS Reader**.
 4. **Test Webhook**:
    - Open Payviro UPI ➔ Tap **Settings (⚙️)**.
-   - Tap **Webhook সংযোগ পরীক্ষা করুন (Ping)**.
-   - You should see: `Webhook সার্ভার সম্পূর্ণ অনলাইন ও সক্রিয়!`.
+   - Tap **Test Webhook Connection (Ping)**.
+   - You should see: `Webhook server is online and active!`.
 
 ---
 

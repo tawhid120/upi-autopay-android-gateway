@@ -56,7 +56,7 @@ class _LicenseActivationScreenState extends State<LicenseActivationScreen> {
       HapticFeedback.mediumImpact();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(result['message'] ?? 'ডিভাইস সফলভাবে সক্রিয় করা হয়েছে!', style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.white)),
+          content: Text(result['message'] ?? 'Device activated successfully!', style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.white)),
           backgroundColor: AppDesign.statusSuccess,
           behavior: SnackBarBehavior.floating,
         ),
@@ -70,7 +70,7 @@ class _LicenseActivationScreenState extends State<LicenseActivationScreen> {
     } else {
       HapticFeedback.heavyImpact();
       setState(() {
-        _errorMessage = result['message'] ?? 'ডিভাইস অ্যাক্টিভেশন ব্যর্থ হয়েছে।';
+        _errorMessage = result['message'] ?? 'Device activation failed.';
       });
     }
   }
@@ -131,7 +131,7 @@ class _LicenseActivationScreenState extends State<LicenseActivationScreen> {
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
-                            'আপনার মার্চেন্ট ড্যাশবোর্ড থেকে লাইসেন্স কি (যেমন: PV-PRO-XXXX) সংগ্রহ করে এই ফোনে পেয়ার করুন।',
+                            'Enter your Merchant License Key (e.g., PV-PRO-XXXX) from your dashboard to pair this device.',
                             style: TextStyle(
                               color: colors.textSecondary,
                               fontSize: 12.5,
@@ -175,7 +175,7 @@ class _LicenseActivationScreenState extends State<LicenseActivationScreen> {
 
                   // License Key Input
                   Text(
-                    'মার্চেন্ট লাইসেন্স কি *',
+                    'Merchant License Key *',
                     style: TextStyle(
                       color: colors.textPrimary,
                       fontSize: 13,
@@ -218,10 +218,10 @@ class _LicenseActivationScreenState extends State<LicenseActivationScreen> {
                     ),
                     validator: (v) {
                       if (v == null || v.trim().isEmpty) {
-                        return 'লাইসেন্স কি প্রদান করুন';
+                        return 'Please provide a license key';
                       }
                       if (!v.trim().toUpperCase().startsWith('PV-')) {
-                        return 'সঠিক ফরম্যাটের লাইসেন্স কি দিন (যেমন: PV-PRO-...)';
+                        return 'Enter a valid license key format (e.g. PV-PRO-...)';
                       }
                       return null;
                     },
@@ -242,7 +242,7 @@ class _LicenseActivationScreenState extends State<LicenseActivationScreen> {
                         const SizedBox(width: 10),
                         Expanded(
                           child: Text(
-                            'ফোনের হার্ডওয়্যার মডেল স্বয়ংক্রিয়ভাবে শনাক্ত ও ইউনিকলি পেয়ার হবে',
+                            'Phone hardware model will be automatically detected and uniquely paired',
                             style: TextStyle(
                               color: colors.textSecondary,
                               fontSize: 12,
@@ -256,7 +256,7 @@ class _LicenseActivationScreenState extends State<LicenseActivationScreen> {
 
                   // Server URL Input
                   Text(
-                    'সার্ভার ইউআরএল (API Base)',
+                    'Server URL (API Base)',
                     style: TextStyle(
                       color: colors.textPrimary,
                       fontSize: 13,
@@ -291,7 +291,7 @@ class _LicenseActivationScreenState extends State<LicenseActivationScreen> {
                     ),
                     validator: (v) {
                       if (v == null || v.trim().isEmpty) {
-                        return 'সার্ভার ইউআরএল প্রয়োজন';
+                        return 'Server URL is required';
                       }
                       return null;
                     },
@@ -320,7 +320,7 @@ class _LicenseActivationScreenState extends State<LicenseActivationScreen> {
                                 Icon(Icons.link_rounded, size: 20, color: Colors.white),
                                 SizedBox(width: 8),
                                 Text(
-                                  'লাইসেন্স অ্যাক্টিভেট ও পেয়ার করুন',
+                                  'Activate License & Pair Device',
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w700,

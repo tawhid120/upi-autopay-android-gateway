@@ -72,7 +72,7 @@ class _StatusHeaderState extends State<StatusHeader> with SingleTickerProviderSt
             child: Row(
               children: [
                 _buildLiveChip(
-                  label: provider.isOnline ? "অনলাইন" : "অফলাইন",
+                  label: provider.isOnline ? "Online" : "Offline",
                   isPositive: provider.isOnline,
                   activeColor: colors.success,
                   inactiveColor: colors.error,
@@ -82,9 +82,9 @@ class _StatusHeaderState extends State<StatusHeader> with SingleTickerProviderSt
                 _buildLiveChip(
                   label: provider.isAnyTrackingActive
                       ? (provider.isHybridActive
-                          ? "হাইব্রিড ট্র্যাকার"
-                          : (provider.hasSmsPermission ? "SMS ট্র্যাকার" : "নোটিফিকেশন"))
-                      : "ট্র্যাকার বন্ধ",
+                          ? "Hybrid Tracker"
+                          : (provider.hasSmsPermission ? "SMS Tracker" : "Notification Listener"))
+                      : "Tracker Inactive",
                   isPositive: provider.isAnyTrackingActive,
                   activeColor: colors.success,
                   inactiveColor: colors.error,
@@ -92,7 +92,7 @@ class _StatusHeaderState extends State<StatusHeader> with SingleTickerProviderSt
                 ),
                 const SizedBox(width: 8),
                 _buildLiveChip(
-                  label: provider.isBackgroundRunning ? "২৪/৭ একটিভ" : "ব্যাকগ্রাউন্ড অফ",
+                  label: provider.isBackgroundRunning ? "24/7 Active" : "Background Off",
                   isPositive: provider.isBackgroundRunning,
                   activeColor: colors.accentCyan,
                   inactiveColor: colors.textTertiary,
@@ -112,7 +112,7 @@ class _StatusHeaderState extends State<StatusHeader> with SingleTickerProviderSt
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "মোট সংগৃহীত পেমেন্ট",
+                "Total Collected Volume",
                 style: TextStyle(
                   color: colors.textSecondary,
                   fontSize: 13,
@@ -128,7 +128,7 @@ class _StatusHeaderState extends State<StatusHeader> with SingleTickerProviderSt
                   border: Border.all(color: colors.borderSubtle),
                 ),
                 child: Text(
-                  "$totalCount টি পেমেন্ট",
+                  "$totalCount Payments",
                   style: TextStyle(
                     color: colors.textPrimary,
                     fontSize: 12,
@@ -202,7 +202,7 @@ class _StatusHeaderState extends State<StatusHeader> with SingleTickerProviderSt
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "সার্ভার সিঙ্কড",
+                              "Server Synced",
                               style: TextStyle(
                                 color: colors.textSecondary,
                                 fontSize: 11,
@@ -213,7 +213,7 @@ class _StatusHeaderState extends State<StatusHeader> with SingleTickerProviderSt
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              "$syncedCount টি",
+                              "$syncedCount",
                               style: TextStyle(
                                 color: colors.textPrimary,
                                 fontSize: 15,
@@ -272,7 +272,7 @@ class _StatusHeaderState extends State<StatusHeader> with SingleTickerProviderSt
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "অপেক্ষমাণ",
+                                "Pending Sync",
                                 style: TextStyle(
                                   color: colors.textSecondary,
                                   fontSize: 11,
@@ -283,7 +283,7 @@ class _StatusHeaderState extends State<StatusHeader> with SingleTickerProviderSt
                               ),
                               const SizedBox(height: 2),
                               Text(
-                                "$pendingCount টি",
+                                "$pendingCount",
                                 style: TextStyle(
                                   color: pendingCount > 0 ? colors.warning : colors.textPrimary,
                                   fontSize: 15,
@@ -393,7 +393,7 @@ class _StatusHeaderState extends State<StatusHeader> with SingleTickerProviderSt
           Icon(isPaired ? Icons.dns_rounded : Icons.cloud_off_rounded, size: 12, color: color),
           const SizedBox(width: 5),
           Text(
-            isPaired ? "সার্ভার সংযুক্ত" : "সার্ভার বিচ্ছিন্ন",
+            isPaired ? "Server Connected" : "Server Disconnected",
             style: TextStyle(
               color: color,
               fontSize: 11,

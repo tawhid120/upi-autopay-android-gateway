@@ -141,19 +141,19 @@ class BackendApiService {
 
         return {
           'success': true,
-          'message': body['message'] ?? 'ডিভাইস সফলভাবে রেজিস্টার হয়েছে।',
+          'message': body['message'] ?? 'Device registered successfully.',
           'session': _cachedSession,
         };
       } else {
         return {
           'success': false,
-          'message': body['message'] ?? 'ডিভাইস অ্যাক্টিভেশন ব্যর্থ হয়েছে (${response.statusCode})',
+          'message': body['message'] ?? 'Device activation failed (${response.statusCode})',
         };
       }
     } catch (e) {
       return {
         'success': false,
-        'message': 'সার্ভারে সংযোগ করা যায়নি ($cleanUrl): $e',
+        'message': 'Could not connect to server ($cleanUrl): $e',
       };
     }
   }
@@ -222,7 +222,7 @@ class BackendApiService {
   Future<Map<String, dynamic>> syncPayments(List<PaymentModel> payments) async {
     final session = await loadSession();
     if (!session.isPaired) {
-      return {'success': false, 'message': 'ডিভাইস পেয়ার করা হয়নি।'};
+      return {'success': false, 'message': 'Device is not paired.'};
     }
 
     final endpoint = Uri.parse('${session.serverUrl}/api/v1/devices/sync');
@@ -261,18 +261,18 @@ class BackendApiService {
         return {
           'success': false,
           'isRevoked': true,
-          'message': body['message'] ?? 'ডিভাইস বা মার্চেন্ট অ্যাক্সেস স্থগিত করা হয়েছে।',
+          'message': body['message'] ?? 'Device or merchant access has been revoked.',
         };
       } else {
         return {
           'success': false,
-          'message': body['message'] ?? 'সিঙ্ক ব্যর্থ হয়েছে (${response.statusCode})',
+          'message': body['message'] ?? 'Sync failed (${response.statusCode})',
         };
       }
     } catch (e) {
       return {
         'success': false,
-        'message': 'সার্ভারের সাথে সংযোগ বিচ্ছিন্ন: $e',
+        'message': 'Server connection failed: $e',
       };
     }
   }

@@ -537,7 +537,7 @@ export function initDatabase() {
         '2.3.0.0.1',
         5,
         'https://github.com/tawhid120/payverify-bd/releases/download/v2.3.0.0.1/app-release.apk',
-        'অ্যাপল-অনুপ্রাণিত লিকুইড ও ফ্রস্টেড গ্লাস মেটেরিয়াল UI, সম্পূর্ণ লাইট ও ডার্ক এবং অটো-সিস্টেম থিম সাপোর্ট, সাথে উচ্চমানের ব্যাকগ্রাউন্ড রিলে নির্ভরযোগ্যতা।',
+        'Apple-inspired Liquid & Frosted Glass Material UI, full Light, Dark, and Auto-System theme support, with enterprise-grade background relay reliability.',
         1,
         0,
         1

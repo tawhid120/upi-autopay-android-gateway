@@ -114,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               ),
             ),
             Text(
-              "অটো পেমেন্ট ভেরিফিকেশন সিস্টেম",
+              "Automated Payment Verification System",
               style: TextStyle(
                 fontSize: 11,
                 color: colors.textSecondary,
@@ -139,8 +139,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             backgroundColor: count > 0 ? colors.success : colors.surfaceElevated,
                             content: Text(
                               count > 0
-                                  ? "$count টি পেমেন্ট VPS সার্ভারে সফলভাবে আপলোড হয়েছে!"
-                                  : "কোনো অপেক্ষমাণ পেমেন্ট নেই অথবা সার্ভারের সাথে সংযোগ করা যায়নি।",
+                                  ? "$count payments synced successfully to VPS server!"
+                                  : "No pending payments or unable to connect to server.",
                               style: TextStyle(fontWeight: FontWeight.w600, color: count > 0 ? Colors.white : colors.textPrimary),
                             ),
                             behavior: SnackBarBehavior.floating,
@@ -243,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     children: [
                       const Icon(Icons.account_balance_wallet_rounded, size: 14),
                       const SizedBox(width: 5),
-                      Text("পেমেন্ট (${provider.payments.length})"),
+                      Text("Payments (${provider.payments.length})"),
                     ],
                   ),
                 ),
@@ -263,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     children: [
                       Icon(Icons.integration_instructions_rounded, size: 14),
                       SizedBox(width: 5),
-                      Text("API গাইড"),
+                      Text("API Guide"),
                     ],
                   ),
                 ),
@@ -303,8 +303,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           Expanded(
                             child: Text(
                               newCount > 0
-                                  ? "🎉 $newCount টি নতুন পেমেন্ট পাওয়া গেছে এবং সংরক্ষিত হয়েছে!"
-                                  : "ইনবক্সে কোনো নতুন পেমেন্ট মেসেজ পাওয়া যায়নি।",
+                                  ? "🎉 Found and saved $newCount new payments!"
+                                  : "No new payment messages found in inbox.",
                               style: TextStyle(fontWeight: FontWeight.w600, color: colors.textPrimary),
                             ),
                           ),
@@ -338,7 +338,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   : const Icon(Icons.sync_rounded, color: Colors.white, size: 20),
               const SizedBox(width: 8),
               Text(
-                provider.isScanning ? "স্ক্যান হচ্ছে..." : "নতুন SMS স্ক্যান করুন",
+                provider.isScanning ? "Scanning..." : "Scan New SMS",
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w700,
@@ -386,7 +386,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 style: TextStyle(fontSize: 13.5, color: colors.textPrimary, fontWeight: FontWeight.w500),
                 onChanged: (val) => setState(() => _searchQuery = val),
                 decoration: InputDecoration(
-                  hintText: "TrxID, ফোন নম্বর বা রেফারেন্স দিয়ে খুঁজুন...",
+                  hintText: "Search by UTR, phone number, or reference...",
                   hintStyle: TextStyle(fontSize: 13, color: colors.textTertiary),
                   prefixIcon: Icon(Icons.search_rounded, size: 20, color: colors.textSecondary),
                   suffixIcon: _searchQuery.isNotEmpty
@@ -454,7 +454,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 : null,
                           ),
                           child: Text(
-                            filter == 'All' ? 'সব পেমেন্ট' : filter,
+                            filter == 'All' ? 'All Providers' : filter,
                             style: TextStyle(
                               color: isSelected ? Colors.white : colors.textSecondary,
                               fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
@@ -476,11 +476,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: Row(
                 children: [
-                  _buildStatusChip(provider, null, "সব অবস্থা"),
+                  _buildStatusChip(provider, null, "All Status"),
                   const SizedBox(width: 8),
-                  _buildStatusChip(provider, SyncStatus.pending, "সিঙ্ক বাকি"),
+                  _buildStatusChip(provider, SyncStatus.pending, "Pending Sync"),
                   const SizedBox(width: 8),
-                  _buildStatusChip(provider, SyncStatus.synced, "সার্ভার সিঙ্কড"),
+                  _buildStatusChip(provider, SyncStatus.synced, "Server Synced"),
                 ],
               ),
             ),
@@ -510,14 +510,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       ),
                       const SizedBox(height: 18),
                       Text(
-                        _searchQuery.isNotEmpty ? "কোনো ম্যাচিং পেমেন্ট পাওয়া যায়নি" : "এখনো কোনো পেমেন্ট পাওয়া যায়নি",
+                        _searchQuery.isNotEmpty ? "No matching payments found" : "No payments detected yet",
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: colors.textPrimary),
                       ),
                       const SizedBox(height: 6),
                       Text(
                         _searchQuery.isNotEmpty
-                            ? "অন্য কোনো TrxID বা মোবাইল নম্বর দিয়ে সার্চ করুন"
-                            : "ফোনের মেসেজ ইনবক্স স্ক্যান করে পেমেন্ট স্বয়ংক্রিয়ভাবে ডিটেক্ট করুন",
+                            ? "Try searching with a different UTR/TrxID or sender phone number"
+                            : "Scan your phone inbox to automatically detect incoming UPI payments",
                         style: TextStyle(fontSize: 12.5, color: colors.textSecondary, height: 1.4),
                         textAlign: TextAlign.center,
                       ),
@@ -536,7 +536,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             children: [
                               Icon(Icons.sync_rounded, color: Colors.white, size: 18),
                               SizedBox(width: 8),
-                              Text("ইনবক্স SMS স্ক্যান করুন", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 13)),
+                              Text("Scan Inbox SMS", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 13)),
                             ],
                           ),
                         ),
@@ -616,12 +616,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               ),
               const SizedBox(height: 18),
               Text(
-                "কোনো SMS লোড হয়নি",
+                "No SMS Loaded",
                 style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: colors.textPrimary),
               ),
               const SizedBox(height: 6),
               Text(
-                "নিচের বাটনে চাপ দিয়ে ফোনের ইনবক্সের মেসেজগুলো স্ক্যান করে দেখুন",
+                "Tap the button below to scan and load messages from your inbox",
                 style: TextStyle(fontSize: 12.5, color: colors.textSecondary, height: 1.4),
                 textAlign: TextAlign.center,
               ),
@@ -640,7 +640,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     children: [
                       Icon(Icons.refresh_rounded, color: Colors.white, size: 18),
                       SizedBox(width: 8),
-                      Text("ফোনের মেসেজ লোড করুন", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 13)),
+                      Text("Load Phone Messages", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 13)),
                     ],
                   ),
                 ),
@@ -712,7 +712,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           border: Border.all(color: providerColor.withValues(alpha: 0.35)),
                         ),
                         child: Text(
-                          "${sms.matchedProvider} পেমেন্ট",
+                          "${sms.matchedProvider} Payment",
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w800,
@@ -770,7 +770,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        "UPI Webhook অটোমেশন আর্কিটেকচার",
+                        "UPI Webhook Automation Architecture",
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: colors.textPrimary),
                       ),
                     ),
@@ -778,7 +778,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  "গ্রাহক PhonePe, Google Pay, Paytm, FamPay বা ব্যাংকে UPI পেমেন্ট করলে আপনার ফোন থেকে তাৎক্ষণিকভাবে Webhook সার্ভারে চলে যাবে এবং টেলিগ্রাম বট বা ওয়েবসাইটে ১ সেকেন্ডে ব্যালেন্স যুক্ত হবে।",
+                  "When customers make UPI payments via PhonePe, Google Pay, Paytm, FamPay, or Bank, your device automatically captures the payment and relays it instantly to your Webhook server, updating user balances in 1 second.",
                   style: TextStyle(fontSize: 12.5, color: colors.textSecondary, height: 1.5),
                 ),
               ],
@@ -788,21 +788,21 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           const SizedBox(height: 20),
 
           _buildStepCard(
-            stepNumber: "১",
-            title: "টেলিগ্রাম বট Webhook সংযোগ",
-            description: "অ্যাপ সেটিংস থেকে Webhook URL (ডিফল্ট: http://38.127.8.169:8888/api/upi/webhook) এবং Secret কি কনফিগার করুন।",
+            stepNumber: "1",
+            title: "Telegram Bot Webhook Connection",
+            description: "Configure Webhook URL (default: http://38.127.8.169:8888/api/upi/webhook) and Secret key from Settings.",
           ),
           const SizedBox(height: 10),
           _buildStepCard(
-            stepNumber: "২",
-            title: "২৪/৭ অটো ব্যাকগ্রাউন্ড মনিটরিং",
-            description: "অ্যাপে 'নোটিফিকেশন লিসেনার' ও ব্যাকগ্রাউন্ড সার্ভিস চালু রাখুন। ইন্টারনেট সাময়িক বিচ্ছিন্ন হলেও সমস্ত পেমেন্ট অফলাইনে জমা থাকবে এবং কানেকশন আসা মাত্র স্বয়ংক্রিয়ভাবে সিঙ্ক হবে।",
+            stepNumber: "2",
+            title: "24/7 Auto Background Monitoring",
+            description: "Keep Notification Listener and Background Service active. If internet disconnects, payments queue offline and sync automatically once reconnected.",
           ),
           const SizedBox(height: 10),
           _buildStepCard(
-            stepNumber: "৩",
-            title: "Webhook JSON পে-লোড ফরম্যাট",
-            description: "প্রতিটি পেমেন্টে নিচের ফরম্যাটে বট/সার্ভারে HTTP POST রিকোয়েস্ট পৌঁছায়:",
+            stepNumber: "3",
+            title: "Webhook JSON Payload Schema",
+            description: "For every incoming payment, an HTTP POST request is dispatched to your bot/server in this format:",
           ),
 
           const SizedBox(height: 12),
@@ -855,7 +855,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         HapticFeedback.lightImpact();
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text("কোড ক্লিপবোর্ডে কপি হয়েছে!"),
+                            content: Text("Code copied to clipboard!"),
                             duration: Duration(seconds: 1),
                             behavior: SnackBarBehavior.floating,
                           ),
